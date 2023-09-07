@@ -31,29 +31,6 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ListQuestionsModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      context.pushNamed(
-        'AnsweringQuestion',
-        queryParameters: {
-          'titleReceived': serializeParam(
-            random_data.randomString(
-              4,
-              5,
-              true,
-              false,
-              false,
-            ),
-            ParamType.String,
-          ),
-          'questionReceived': serializeParam(
-            '',
-            ParamType.String,
-          ),
-        }.withoutNulls,
-      );
-    });
   }
 
   @override
