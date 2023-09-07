@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "742267325997",
+    "project_id": "crowdstest-926f7",
+    "storage_bucket": "crowdstest-926f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742267325997:android:3967f3b1ef416bddb9b2a4",
+        "android_client_info": {
+          "package_name": "com.flutterflow.fftrivia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742267325997-kug89ea1ie954p4hrjhf93nsugehs7g0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJO4hzbLSg4cZWo6HGjk9ayS1xI-7Bot4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742267325997-kug89ea1ie954p4hrjhf93nsugehs7g0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "742267325997-vdhoc705uojbr3qdrb41h003ahbamqpf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutterflow.fftrivia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
