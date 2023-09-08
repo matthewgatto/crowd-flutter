@@ -38,10 +38,8 @@ class _CreateQuestionIndividuallyWidgetState
     super.initState();
     _model = createModel(context, () => CreateQuestionIndividuallyModel());
 
-    _model.textController1 ??=
-        TextEditingController(text: '[insert question title here]');
-    _model.textController2 ??=
-        TextEditingController(text: '[insert question text here]');
+    _model.textController1 ??= TextEditingController();
+    _model.textController2 ??= TextEditingController();
   }
 
   @override
@@ -176,6 +174,7 @@ class _CreateQuestionIndividuallyWidgetState
                                         .labelMedium,
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium,
+                                    hintText: '[insert question title here]',
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
@@ -232,6 +231,7 @@ class _CreateQuestionIndividuallyWidgetState
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    hintText: '[insert question text here]',
                                     isDense: true,
                                     labelText: 'Label here...',
                                     labelStyle: FlutterFlowTheme.of(context)
@@ -377,6 +377,8 @@ class _CreateQuestionIndividuallyWidgetState
                                 context.pushNamed(
                                   'CreateQuestionSuccessfully',
                                   queryParameters: {
+                                    'title':_model.textController1.text,
+                                    'time': _model.dropDownValueController?.value,
                                     'typeReceived': serializeParam(
                                       createQuestionIndividuallyQuestionTypeRecord
                                           .reference,

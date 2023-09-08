@@ -185,8 +185,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CreateQuestionSuccessfully',
           path: '/createQuestionSuccessfully',
           builder: (context, params) => CreateQuestionSuccessfullyWidget(
+
             typeReceived: params.getParam('typeReceived',
                 ParamType.DocumentReference, false, ['questionType']),
+            title: params.getParam('title',ParamType.String),
+            time: params.getParam('time',ParamType.String),
           ),
         ),
         FFRoute(

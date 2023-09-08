@@ -13,9 +13,13 @@ export 'create_question_successfully_model.dart';
 class CreateQuestionSuccessfullyWidget extends StatefulWidget {
   const CreateQuestionSuccessfullyWidget({
     Key? key,
+    required this.title,
+    required this.time,
     required this.typeReceived,
   }) : super(key: key);
 
+  final String? title;
+  final String? time;
   final DocumentReference? typeReceived;
 
   @override
@@ -172,8 +176,7 @@ class _CreateQuestionSuccessfullyWidgetState
                                   0.0, 10.0, 0.0, 10.0),
                               child: Text(
                                 valueOrDefault<String>(
-                                  createQuestionSuccessfullyQuestionNewRecord
-                                      ?.questionTitle,
+                                  widget.title,
                                   'default',
                                 ),
                                 style: FlutterFlowTheme.of(context)
@@ -226,7 +229,7 @@ class _CreateQuestionSuccessfullyWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 10.0, 10.0, 10.0),
                               child: Text(
-                                'x minutes',
+                                '${widget.time} minutes',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .titleSmall
