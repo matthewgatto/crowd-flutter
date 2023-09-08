@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crowds/pages/about_us_page/about_us_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
@@ -90,6 +91,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'StartPage',
           path: '/startPage',
           builder: (context, params) => StartPageWidget(),
+        ),
+        FFRoute(
+          name: 'AboutUs',
+          path: '/aboutUs',
+          builder: (context, params) => AboutUsPage(),
         ),
         FFRoute(
           name: 'OnboardingPage',

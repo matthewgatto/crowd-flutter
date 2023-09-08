@@ -1,3 +1,4 @@
+import 'package:crowds/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
@@ -18,7 +19,7 @@ class ButtonWidget extends StatelessWidget {
       data: Theme.of(context).copyWith(
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: color ?? Theme.of(context).primaryColor,
+            backgroundColor: color ?? FlutterFlowTheme.of(context).splash,
           ),
         ),
       ),
