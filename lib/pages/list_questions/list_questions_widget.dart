@@ -180,49 +180,42 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
                                     final columnQuestionNewRecord =
                                         columnQuestionNewRecordList[columnIndex];
                                     return Align(
-                                      alignment: AlignmentDirectional(-1.0, 0.0),
+                                      alignment: Alignment.center,
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10.0, 10.0, 10.0, 10.0),
-                                        child: ListView(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          children: [
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor: Colors.transparent,
-                                              onTap: () async {
-                                                context.pushNamed(
-                                                  'AnsweringQuestion',
-                                                  queryParameters: {
-                                                    'titleReceived':
-                                                        serializeParam(
-                                                      columnQuestionNewRecord
-                                                          .questionTitle,
-                                                      ParamType.String,
-                                                    ),
-                                                    'questionReceived':
-                                                        serializeParam(
-                                                      columnQuestionNewRecord
-                                                          .questionText,
-                                                      ParamType.String,
-                                                    ),
-                                                  }.withoutNulls,
-                                                );
-                                              },
-                                              child: Text(
-                                                columnQuestionNewRecord
-                                                    .questionTitle,
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium,
-                                              ),
-                                            ),
-                                          ],
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'AnsweringQuestion',
+                                              queryParameters: {
+                                                'titleReceived':
+                                                serializeParam(
+                                                  columnQuestionNewRecord
+                                                      .questionTitle,
+                                                  ParamType.String,
+                                                ),
+                                                'questionReceived':
+                                                serializeParam(
+                                                  columnQuestionNewRecord
+                                                      .questionText,
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Text(
+                                            columnQuestionNewRecord
+                                                .questionTitle,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMedium,
+                                          ),
                                         ),
                                       ),
                                     );
