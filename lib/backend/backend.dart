@@ -275,6 +275,12 @@ Stream<List<T>> queryCollection<T>(
   if (limit > 0 || singleRecord) {
     query = query.limit(singleRecord ? 1 : limit);
   }
+  print("data");
+  query.get().then((value) {
+    print("value: ${value.size}");
+    print("value: ${value.docs.last.data()}");
+  });
+
   return query.snapshots().handleError((err) {
     print('Error querying $collection: $err');
   }).map((s) => s.docs

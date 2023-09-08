@@ -365,20 +365,29 @@ class _CreateQuestionIndividuallyWidgetState
                                 10.0, 10.0, 10.0, 10.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                await QuestionNewRecord.collection
-                                    .doc()
-                                    .set(createQuestionNewRecordData(
-                                      questionTitle:
-                                          _model.textController1.text,
-                                      questionText: _model.textController2.text,
-                                      onSale: true,
-                                    ));
+                                var typeReference = serializeParam(
+                                  createQuestionIndividuallyQuestionTypeRecord
+                                      .reference,
+                                  ParamType.DocumentReference,
+                                );
+
+                                await QuestionNewRecord.collection.doc().set(
+                                      createQuestionNewRecordData(
+                                        questionTitle:
+                                            _model.textController1.text,
+                                        questionText:
+                                            _model.textController2.text,
+                                        questionType: typeReference,
+                                        onSale: true,
+                                      ),
+                                    );
 
                                 context.pushNamed(
                                   'CreateQuestionSuccessfully',
                                   queryParameters: {
-                                    'title':_model.textController1.text,
-                                    'time': _model.dropDownValueController?.value,
+                                    'title': _model.textController1.text,
+                                    'time':
+                                        _model.dropDownValueController?.value,
                                     'typeReceived': serializeParam(
                                       createQuestionIndividuallyQuestionTypeRecord
                                           .reference,

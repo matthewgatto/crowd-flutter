@@ -129,6 +129,7 @@ Map<String, dynamic> createQuestionNewRecordData({
   double? salePrice,
   String? questionText,
   String? questionTitle,
+  String? questionType,
   int? id,
   int? questionDuration,
 }) {
@@ -143,6 +144,7 @@ Map<String, dynamic> createQuestionNewRecordData({
       'sale_price': salePrice,
       'questionText': questionText,
       'questionTitle': questionTitle,
+      'questionType': questionType,
       'id': id,
       'questionDuration': questionDuration,
     }.withoutNulls,
