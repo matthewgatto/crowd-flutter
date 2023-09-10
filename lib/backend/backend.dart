@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import '../auth/firebase_auth/auth_util.dart';
 
 import '../flutter_flow/flutter_flow_util.dart';
@@ -275,11 +276,16 @@ Stream<List<T>> queryCollection<T>(
   if (limit > 0 || singleRecord) {
     query = query.limit(singleRecord ? 1 : limit);
   }
-  print("data");
-  query.get().then((value) {
-    print("value: ${value.size}");
-    print("value: ${value.docs.last.data()}");
-  });
+
+  if(kDebugMode){
+    print("firebase data --------------->");
+    query.get().then((value) {
+      print("size: ${value.size}");
+      value.docs.forEach((element) {
+        print(element.data());
+      });
+    });
+  }
 
   return query.snapshots().handleError((err) {
     print('Error querying $collection: $err');

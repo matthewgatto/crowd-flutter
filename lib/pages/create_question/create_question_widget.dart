@@ -35,21 +35,25 @@ class _CreateQuestionWidgetState extends State<CreateQuestionWidget> {
     super.dispose();
   }
 
+  void _showDetailPage(QuestionTypeRecord questionTyp) {
+    var destinationPage = 'CreateQuestionIndividually';
+
+    context.pushReplacementNamed(
+      destinationPage,
+      queryParameters: {
+        'typeReceived': serializeParam(
+          questionTyp.reference,
+          ParamType.DocumentReference,
+        ),
+      }.withoutNulls,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget getItemCard(QuestionTypeRecord questionTyp) {
       return InkWell(
-        onTap: () async {
-          context.pushNamed(
-            'CreateQuestionIndividually',
-            queryParameters: {
-              'typeReceived': serializeParam(
-                questionTyp.reference,
-                ParamType.DocumentReference,
-              ),
-            }.withoutNulls,
-          );
-        },
+        onTap: () => _showDetailPage(questionTyp),
         child: Card(
           child: Padding(
             padding: EdgeInsets.all(16),
