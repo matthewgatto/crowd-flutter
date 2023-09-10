@@ -36,17 +36,50 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
+  }
+
+  Widget _itemWidget(QuestionNewRecord item) {
+    return InkWell(
+      onTap: () async {
+        context.pushNamed(
+          'AnsweringQuestion',
+          queryParameters: {
+            'titleReceived': serializeParam(
+              item.questionTitle,
+              ParamType.String,
+            ),
+            'questionReceived': serializeParam(
+              item.questionText,
+              ParamType.String,
+            ),
+          }.withoutNulls,
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Icon(Icons.question_answer_outlined),
+              SizedBox(width: 16),
+              Text(
+                item.questionTitle,
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<QuestionNewRecord>>(
-      stream: queryQuestionNewRecord(
-        queryBuilder: (questionNewRecord) =>
-            questionNewRecord.where('on_sale', isEqualTo: true),
-      ),
+      stream: queryQuestionNewRecord(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -65,39 +98,13 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
             ),
           );
         }
-        List<QuestionNewRecord> listQuestionsQuestionNewRecordList =
-            snapshot.data!;
+        List<QuestionNewRecord> columnQuestionNewRecordList = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           backgroundColor: Color(0xFFF5F5F5),
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).splash,
-            automaticallyImplyLeading: false,
-            leading: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 30.0,
-              ),
-              onPressed: () async {
-                context.pop();
-              },
-            ),
-            title: Text(
-              'Answering...',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Roboto',
-                    color: Colors.white,
-                    fontSize: 22.0,
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 2.0,
+            title: Text('Answering...'),
           ),
           body: Container(
             width: MediaQuery.sizeOf(context).width * 1.0,
@@ -111,175 +118,136 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
                 ).image,
               ),
             ),
-            child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsetsDirectional.fromSTEB(
+                24.0,
+                24.0,
+                24.0,
+                24.0,
+              ),
+              color: FlutterFlowTheme.of(context).customColor5,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Material(
-                    color: Colors.transparent,
-                    elevation: 6.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.0),
-                        bottomRight: Radius.circular(16.0),
-                        topLeft: Radius.circular(0.0),
-                        topRight: Radius.circular(0.0),
-                      ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                    child: Text(
+                      'Select one of the following questions: ',
+                      textAlign: TextAlign.center,
+                      style: FlutterFlowTheme.of(context).titleMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                     ),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).customColor5,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(16.0),
-                          bottomRight: Radius.circular(16.0),
-                          topLeft: Radius.circular(0.0),
-                          topRight: Radius.circular(0.0),
+                  ),
+                  SizedBox(height: 16),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        ListView.separated(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 21,
+                            horizontal: 16,
+                          ),
+                          itemCount: columnQuestionNewRecordList.length,
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 8,
+                          ),
+                          itemBuilder: (context, index) => _itemWidget(
+                            columnQuestionNewRecordList[index],
+                          ),
                         ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            24.0, 24.0, 24.0, 24.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 10.0),
-                              child: Text(
-                                'Select one of the following questions: ',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).displaySmall,
-                              ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            height: 20,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xffEEEEEE),
+                                    Color(0x7eeeeeee),
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                )
                             ),
-                            StreamBuilder<List<QuestionNewRecord>>(
-                              stream: queryQuestionNewRecord(),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<QuestionNewRecord>
-                                    columnQuestionNewRecordList = snapshot.data!;
-                                return Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: List.generate(
-                                      columnQuestionNewRecordList.length,
-                                      (columnIndex) {
-                                    final columnQuestionNewRecord =
-                                        columnQuestionNewRecordList[columnIndex];
-                                    return Align(
-                                      alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 10.0, 10.0, 10.0),
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              'AnsweringQuestion',
-                                              queryParameters: {
-                                                'titleReceived':
-                                                serializeParam(
-                                                  columnQuestionNewRecord
-                                                      .questionTitle,
-                                                  ParamType.String,
-                                                ),
-                                                'questionReceived':
-                                                serializeParam(
-                                                  columnQuestionNewRecord
-                                                      .questionText,
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: Text(
-                                            columnQuestionNewRecord
-                                                .questionTitle,
-                                            textAlign: TextAlign.center,
-                                            style:
-                                            FlutterFlowTheme.of(context)
-                                                .bodyMedium,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                );
-                              },
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 20.0, 20.0, 20.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1.0, -1.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20.0, 20.0, 20.0, 20.0),
-                                      child: Text(
-                                        'Right now the average reward for answering a question is: ',
-                                        textAlign: TextAlign.center,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color: Color(0xFF4B39EF),
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 10.0),
-                                      child: Text(
-                                        valueOrDefault<String>(
-                                          formatNumber(
-                                            random_data.randomDouble(1.5, 3.7),
-                                            formatType: FormatType.decimal,
-                                            decimalType: DecimalType.automatic,
-                                            currency: '\$',
-                                          ),
-                                          '2',
-                                        ),
-                                        textAlign: TextAlign.center,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color: Color(0xE339D261),
-                                              fontSize: 48.0,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 20,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xffEEEEEE),
+                                  Color(0x7eeeeeee),
                                 ],
-                              ),
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                              )
                             ),
-                          ],
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        20.0,
+                        0.0,
+                        20.0,
+                        20.0,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 20.0, 20.0, 20.0),
+                            child: Text(
+                              'Right now the average reward for answering a question is: ',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: Color(0xFF4B39EF),
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 10.0),
+                            child: Text(
+                              valueOrDefault<String>(
+                                formatNumber(
+                                  random_data.randomDouble(1.5, 3.7),
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.automatic,
+                                  currency: '\$',
+                                ),
+                                '2',
+                              ),
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: Color(0xE339D261),
+                                    fontSize: 48.0,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
