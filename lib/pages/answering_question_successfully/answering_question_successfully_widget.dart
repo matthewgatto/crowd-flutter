@@ -42,10 +42,6 @@ class _AnsweringQuestionSuccessfullyWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        title: Text('Success!'),
-        backgroundColor: FlutterFlowTheme.of(context).splash,
-      ),
       backgroundColor: Color(0xFFF5F5F5),
       body: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,

@@ -63,7 +63,7 @@ class _CreateQuestionIndividuallyWidgetState
           ),
         );
 
-    context.pushNamed(
+    context.pushReplacementNamed(
       'CreateQuestionSuccessfully',
       queryParameters: {
         'title': _model.textController1.text,

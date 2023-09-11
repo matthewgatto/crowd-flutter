@@ -1,9 +1,8 @@
+import 'package:crowds/widgets/button_widget.dart';
+
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'create_question_successfully_model.dart';
 export 'create_question_successfully_model.dart';
@@ -68,48 +67,9 @@ class _CreateQuestionSuccessfullyWidgetState
             ),
           );
         }
-        List<QuestionNewRecord>
-            createQuestionSuccessfullyQuestionNewRecordList = snapshot.data!;
-        // Return an empty Container when the item does not exist.
-        if (snapshot.data!.isEmpty) {
-          return Container();
-        }
-        final createQuestionSuccessfullyQuestionNewRecord =
-            createQuestionSuccessfullyQuestionNewRecordList.isNotEmpty
-                ? createQuestionSuccessfullyQuestionNewRecordList.first
-                : null;
         return Scaffold(
           key: scaffoldKey,
           backgroundColor: Color(0xFFF5F5F5),
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).splash,
-            automaticallyImplyLeading: false,
-            leading: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 30.0,
-              ),
-              onPressed: () async {
-                context.pop();
-              },
-            ),
-            title: Text(
-              'Success!',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Roboto',
-                    color: Colors.white,
-                    fontSize: 22.0,
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 2.0,
-          ),
           body: Container(
             width: MediaQuery.sizeOf(context).width * 1.0,
             height: MediaQuery.sizeOf(context).height * 1.0,
@@ -122,123 +82,75 @@ class _CreateQuestionSuccessfullyWidgetState
                 ).image,
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  elevation: 6.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(16.0),
-                      bottomRight: Radius.circular(16.0),
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0),
+            child: Center(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
                     ),
-                  ),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).customColor5,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.0),
-                        bottomRight: Radius.circular(16.0),
-                        topLeft: Radius.circular(0.0),
-                        topRight: Radius.circular(0.0),
-                      ),
-                    ),
+                    margin: EdgeInsets.all(16),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          24.0, 54.0, 24.0, 24.0),
+                      padding: EdgeInsets.all(16),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 10.0),
-                              child: Text(
-                                'You have created a new question titled: ',
-                                textAlign: TextAlign.center,
-                                style:
-                                    FlutterFlowTheme.of(context).displaySmall,
-                              ),
-                            ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.07,
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 10.0),
-                              child: Text(
-                                valueOrDefault<String>(
-                                  widget.title,
-                                  'default',
+                          Text(
+                            'You have created a new question titled: ',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context).displaySmall,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            valueOrDefault<String>(
+                              widget.title,
+                              'default',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color: FlutterFlowTheme.of(context).splash,
+                                  fontSize: 28.0,
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color:
-                                          FlutterFlowTheme.of(context).splash,
-                                      fontSize: 28.0,
-                                    ),
-                              ),
+                          ),
+                          SizedBox(height: 16),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://media.giphy.com/media/6mEQOWSYJlnNCPuXNT/giphy.gif',
+                              width: 150.0,
+                              height: 100.0,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 10.0, 10.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  'https://media.giphy.com/media/6mEQOWSYJlnNCPuXNT/giphy.gif',
-                                  width: 150.0,
-                                  height: 100.0,
-                                  fit: BoxFit.cover,
+                          SizedBox(height: 16),
+                          Text(
+                            'Your question will be answered in: ',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .displaySmall
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 20.0,
                                 ),
-                              ),
-                            ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 10.0),
-                              child: Text(
-                                'Your question will be answered in: ',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .displaySmall
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 20.0,
-                                    ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 10.0, 10.0, 10.0),
-                              child: Text(
-                                '${widget.time} minutes',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color:
-                                          FlutterFlowTheme.of(context).splash,
-                                      fontSize: 20.0,
-                                    ),
-                              ),
-                            ),
+                          SizedBox(height: 16),
+                          Text(
+                            '${widget.time} minutes',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color: FlutterFlowTheme.of(context).splash,
+                                  fontSize: 20.0,
+                                ),
                           ),
                           Divider(
                             height: 20.0,
@@ -258,80 +170,47 @@ class _CreateQuestionSuccessfullyWidgetState
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 10.0, 10.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('ListQuestions');
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.03),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 80,
+                            child: ButtonWidget(
+                              title: 'Ask a question',
+                              onPressed: () {
+                                context.pushReplacementNamed('CreateQuestion');
                               },
-                              text: 'View list of questions',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 70.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).accent4,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .customColor4,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                elevation: 4.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 10.0, 10.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('CreateQuestion');
+                          SizedBox(height: 20),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 80,
+                            child: ButtonWidget(
+                              title: 'View list of questions to answer',
+                              color: Colors.deepOrangeAccent,
+                              onPressed: () {
+                                context.pushReplacementNamed('ListQuestions');
                               },
-                              text: 'Ask another question',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 70.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).accent4,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .customColor4,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                elevation: 4.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).cardColor,
+                    ),
+                    child: Icon(
+                      Icons.check_circle,
+                      size: MediaQuery.of(context).size.width * 0.15,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
