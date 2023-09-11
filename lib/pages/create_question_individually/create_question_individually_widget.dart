@@ -138,6 +138,9 @@ class _CreateQuestionIndividuallyWidgetState
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
                     margin: EdgeInsets.all(16),
                     child: Padding(
                       padding: EdgeInsets.all(24),

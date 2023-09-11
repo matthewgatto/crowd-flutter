@@ -71,7 +71,8 @@ class _AnsweringQuestionSuccessfullyWidgetState
                   right: 20,
                 ),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                ),
                 child: Padding(
                   padding: EdgeInsets.all(16),
                   child: Column(

@@ -55,6 +55,9 @@ class _CreateQuestionWidgetState extends State<CreateQuestionWidget> {
       return InkWell(
         onTap: () => _showDetailPage(questionTyp),
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
           child: Padding(
             padding: EdgeInsets.all(16),
             child: Row(

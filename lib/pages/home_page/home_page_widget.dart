@@ -60,7 +60,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Card(
-                  elevation: 6.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     child: Padding(

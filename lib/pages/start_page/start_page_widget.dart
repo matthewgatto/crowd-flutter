@@ -85,7 +85,7 @@ class _StartPageWidgetState extends State<StartPageWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
                   child: Text(
-                    'in under 2 hours',
+                    'Crowds',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Roboto',
                           color: Colors.white,
