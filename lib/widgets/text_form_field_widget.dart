@@ -29,7 +29,7 @@ class TextFormFieldWidget<T> extends StatelessWidget {
         border: OutlineInputBorder(),
         isDense: true,
         labelText: labelText,
-        hintText: 'insert question title here',
+        hintText: hintText,
         filled: true,
       ),
       style: FlutterFlowTheme.of(context).bodyMedium,
