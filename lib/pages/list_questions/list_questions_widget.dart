@@ -166,14 +166,13 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xffEEEEEE),
-                                    Color(0x7eeeeeee),
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                )
-                            ),
+                              colors: [
+                                Color(0xffEEEEEE),
+                                Color(0x7eeeeeee),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            )),
                           ),
                         ),
                         Align(
@@ -182,15 +181,14 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
                             height: 20,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0xffEEEEEE),
-                                  Color(0x7eeeeeee),
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                              )
-                            ),
+                                gradient: LinearGradient(
+                              colors: [
+                                Color(0xffEEEEEE),
+                                Color(0x7eeeeeee),
+                              ],
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                            )),
                           ),
                         ),
                       ],
@@ -226,7 +224,11 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 10.0),
+                              0.0,
+                              10.0,
+                              0.0,
+                              10.0,
+                            ),
                             child: Text(
                               valueOrDefault<String>(
                                 formatNumber(
