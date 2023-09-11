@@ -42,7 +42,7 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
   Widget _itemWidget(QuestionNewRecord item) {
     return InkWell(
       onTap: () async {
-        context.pushNamed(
+        context.pushReplacementNamed(
           'AnsweringQuestion',
           queryParameters: {
             'titleReceived': serializeParam(

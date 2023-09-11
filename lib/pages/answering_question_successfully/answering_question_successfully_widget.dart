@@ -1,14 +1,8 @@
 import 'package:crowds/widgets/button_widget.dart';
 
-import '/auth/firebase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'answering_question_successfully_model.dart';
 export 'answering_question_successfully_model.dart';
 
@@ -141,7 +135,7 @@ class _AnsweringQuestionSuccessfullyWidgetState
                           title: 'View list of questions to answer',
                           color: Colors.deepOrangeAccent,
                           onPressed: () {
-                            context.pop();
+                            context.pushReplacementNamed('ListQuestions');
                           },
                         ),
                       ),
