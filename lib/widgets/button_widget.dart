@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crowds/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +26,9 @@ class ButtonWidget extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(
+        child: AutoSizeText(
           title,
+          maxLines: 1,
           style: Theme.of(context).primaryTextTheme.titleLarge,
         ),
         style: ButtonStyle(
