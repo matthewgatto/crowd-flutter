@@ -41,22 +41,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFFF5F5F5),
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).splash,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Home',
-          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 2.0,
-      ),
       body: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
         height: MediaQuery.sizeOf(context).height * 1.0,
