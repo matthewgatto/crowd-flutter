@@ -1,3 +1,5 @@
+import 'package:crowds/enum/question_length_type.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -22,8 +24,8 @@ class CreateQuestionIndividuallyModel extends FlutterFlowModel {
   TextEditingController? textController2;
   String? Function(BuildContext, String?)? textController2Validator;
   // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
+  QuestionLengthType? dropDownValue;
+  FormFieldController<QuestionLengthType>? dropDownValueController;
 
   /// Initialization and disposal methods.
 

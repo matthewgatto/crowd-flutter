@@ -131,7 +131,7 @@ Map<String, dynamic> createQuestionNewRecordData({
   String? questionTitle,
   String? questionType,
   int? id,
-  int? questionDuration,
+  String? questionDuration,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{

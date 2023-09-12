@@ -1,8 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:crowds/enum/question_length_type.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -59,7 +62,7 @@ class _CreateQuestionIndividuallyWidgetState
         description: 'Current process will be lost.',
         description2: "Do you want to cancel the process?",
         context: context,
-        onApprove: () => context.pushReplacementNamed('ListQuestions'),
+        onApprove: () => context.pushReplacementNamed('CreateQuestion'),
         onCancel: () {},
       );
       return false;
@@ -98,6 +101,7 @@ class _CreateQuestionIndividuallyWidgetState
             questionTitle: _model.textController1.text,
             questionText: _model.textController2.text,
             questionType: typeReference,
+            questionDuration: _model.dropDownValue?.title ?? QuestionLengthType.fiveDay.title,
             onSale: true,
           ),
         );
@@ -207,44 +211,56 @@ class _CreateQuestionIndividuallyWidgetState
                                     .asValidator(context),
                               ),
                               SizedBox(height: 20),
-                              FlutterFlowDropDown<String>(
-                                controller: _model.dropDownValueController ??=
-                                    FormFieldController<String>(null),
-                                options: ['5 minutes', '50 minutes', '5 days'],
-                                onChanged: (val) =>
-                                    setState(() => _model.dropDownValue = val),
-                                width: double.infinity,
-                                height: 50.0,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .customColor4,
+                              DropdownButton2<QuestionLengthType?>(
+                                value: _model.dropDownValue,
+                                customButton: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black12,
+                                    border: Border.all(color: Colors.black26),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                  height: 50,
+                                  padding: EdgeInsets.all(10),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: AutoSizeText(
+                                              _model.dropDownValue != null ?
+                                              (_model.dropDownValue as  QuestionLengthType).title
+                                                  : "Please select length of time question is live",
+                                            maxLines: 1,
+                                          ),
+                                        ),
+                                        Icon(Icons.arrow_drop_down),
+                                      ],
                                     ),
-                                hintText:
-                                    'Please select length of time question is live',
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24.0,
+                                  ),
                                 ),
-                                fillColor: FlutterFlowTheme.of(context).accent3,
-                                elevation: 2.0,
-                                borderColor:
-                                    FlutterFlowTheme.of(context).alternate,
-                                borderWidth: 2.0,
-                                borderRadius: 8.0,
-                                margin: EdgeInsetsDirectional.fromSTEB(
-                                  10.0,
-                                  10.0,
-                                  10.0,
-                                  10.0,
+                                underline: SizedBox(),
+                                dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                  color: Color(0xFFEEEEEE),
+                                )),
+
+                                isExpanded: true,
+                                items: [
+                                  QuestionLengthType.fiveMinute,
+                                  QuestionLengthType.fiftyMinute,
+                                  QuestionLengthType.fiveDay,
+                                ]
+                                    .map(
+                                      (e) =>
+                                          DropdownMenuItem<QuestionLengthType>(
+                                        value: e,
+                                        child: Text(e.title),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (val) => setState(
+                                  () => _model.dropDownValue = val,
                                 ),
-                                hidesUnderline: true,
-                                isSearchable: false,
-                                isMultiSelect: false,
                               ),
                               SizedBox(height: 20),
                               Padding(
@@ -275,12 +291,7 @@ class _CreateQuestionIndividuallyWidgetState
                                     10.0,
                                   ),
                                   child: Text(
-                                    formatNumber(
-                                      random_data.randomDouble(0.5, 1.25),
-                                      formatType: FormatType.decimal,
-                                      decimalType: DecimalType.automatic,
-                                      currency: '\$',
-                                    ),
+                                    "\$${_model.dropDownValue?.money ?? '0.0'}",
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
