@@ -134,144 +134,146 @@ class _CreateQuestionIndividuallyWidgetState
               ),
             ),
             child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                    ),
-                    margin: EdgeInsets.all(16),
-                    child: Padding(
-                      padding: EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 10.0, 10.0),
-                            child: Text(
-                              item.name,
-                              style: FlutterFlowTheme.of(context).displaySmall,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          TextFormFieldWidget(
-                            labelText: 'Question title',
-                            hintText: 'insert question title here',
-                            controller:_model.textController1,
-                            validator: _model.textController1Validator
-                                .asValidator(context),
-                          ),
-                          SizedBox(height: 20),
-                          TextFormFieldWidget(
-                            labelText: 'Question text',
-                            hintText: 'insert question text here',
-                            maxLines: 10,
-                            minLines: 3,
-                            controller:_model.textController2,
-                            validator: _model.textController2Validator
-                                .asValidator(context),
-                          ),
-                          SizedBox(height: 20),
-                          FlutterFlowDropDown<String>(
-                            controller: _model.dropDownValueController ??=
-                                FormFieldController<String>(null),
-                            options: ['5 minutes', '50 minutes', '5 days'],
-                            onChanged: (val) =>
-                                setState(() => _model.dropDownValue = val),
-                            width: double.infinity,
-                            height: 50.0,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color: FlutterFlowTheme.of(context)
-                                      .customColor4,
-                                ),
-                            hintText:
-                                'Please select length of time question is live',
-                            icon: Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryText,
-                              size: 24.0,
-                            ),
-                            fillColor: FlutterFlowTheme.of(context).accent3,
-                            elevation: 2.0,
-                            borderColor:
-                                FlutterFlowTheme.of(context).alternate,
-                            borderWidth: 2.0,
-                            borderRadius: 8.0,
-                            margin: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 10.0, 10.0),
-                            hidesUnderline: true,
-                            isSearchable: false,
-                            isMultiSelect: false,
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 10.0, 10.0, 10.0),
-                            child: Text(
-                              'The price to ask this question is: ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    fontSize: 22.0,
-                                  ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                      ),
+                      margin: EdgeInsets.all(16),
+                      child: Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 10.0, 10.0, 10.0),
                               child: Text(
-                                formatNumber(
-                                  random_data.randomDouble(0.5, 1.25),
-                                  formatType: FormatType.decimal,
-                                  decimalType: DecimalType.automatic,
-                                  currency: '\$',
-                                ),
+                                item.name,
+                                style: FlutterFlowTheme.of(context).displaySmall,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            TextFormFieldWidget(
+                              labelText: 'Question title',
+                              hintText: 'insert question title here',
+                              controller:_model.textController1,
+                              validator: _model.textController1Validator
+                                  .asValidator(context),
+                            ),
+                            SizedBox(height: 20),
+                            TextFormFieldWidget(
+                              labelText: 'Question text',
+                              hintText: 'insert question text here',
+                              maxLines: 10,
+                              minLines: 3,
+                              controller:_model.textController2,
+                              validator: _model.textController2Validator
+                                  .asValidator(context),
+                            ),
+                            SizedBox(height: 20),
+                            FlutterFlowDropDown<String>(
+                              controller: _model.dropDownValueController ??=
+                                  FormFieldController<String>(null),
+                              options: ['5 minutes', '50 minutes', '5 days'],
+                              onChanged: (val) =>
+                                  setState(() => _model.dropDownValue = val),
+                              width: double.infinity,
+                              height: 50.0,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .customColor4,
+                                  ),
+                              hintText:
+                                  'Please select length of time question is live',
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryText,
+                                size: 24.0,
+                              ),
+                              fillColor: FlutterFlowTheme.of(context).accent3,
+                              elevation: 2.0,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).alternate,
+                              borderWidth: 2.0,
+                              borderRadius: 8.0,
+                              margin: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 10.0, 10.0, 10.0),
+                              hidesUnderline: true,
+                              isSearchable: false,
+                              isMultiSelect: false,
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 10.0, 10.0, 10.0),
+                              child: Text(
+                                'The price to ask this question is: ',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Roboto',
-                                      color: Color(0xE339D261),
-                                      fontSize: 36.0,
+                                      fontSize: 22.0,
                                     ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60,
-                            child: ButtonWidget(
-                              title: 'Submit Question',
-                              onPressed: () => _createQuestion(item),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10.0, 10.0, 10.0, 10.0),
+                                child: Text(
+                                  formatNumber(
+                                    random_data.randomDouble(0.5, 1.25),
+                                    formatType: FormatType.decimal,
+                                    decimalType: DecimalType.automatic,
+                                    currency: '\$',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: Color(0xE339D261),
+                                        fontSize: 36.0,
+                                      ),
+                                ),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60,
-                            child: ButtonWidget(
-                              title: 'View list of questions',
-                              color: Theme.of(context).disabledColor,
-                              onPressed: () {
-                                context.pushReplacementNamed('ListQuestions');
-                              },
+                            SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 60,
+                              child: ButtonWidget(
+                                title: 'Submit Question',
+                                onPressed: () => _createQuestion(item),
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 60,
+                              child: ButtonWidget(
+                                title: 'View list of questions',
+                                color: Theme.of(context).disabledColor,
+                                onPressed: () {
+                                  context.pushReplacementNamed('ListQuestions');
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
