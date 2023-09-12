@@ -25,7 +25,6 @@ class CreateQuestionIndividuallyModel extends FlutterFlowModel {
   String? Function(BuildContext, String?)? textController2Validator;
   // State field(s) for DropDown widget.
   QuestionLengthType? dropDownValue;
-  FormFieldController<QuestionLengthType>? dropDownValueController;
 
   /// Initialization and disposal methods.
 

@@ -142,7 +142,7 @@ class _CreateQuestionSuccessfullyWidgetState
                           ),
                           SizedBox(height: 16),
                           Text(
-                            '${widget.time} minutes',
+                            widget.time ?? '',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.of(context)
                                 .titleSmall

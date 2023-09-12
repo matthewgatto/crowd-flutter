@@ -8,12 +8,8 @@ import 'package:crowds/widgets/text_form_field_widget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'create_question_individually_model.dart';
 export 'create_question_individually_model.dart';
@@ -110,7 +106,7 @@ class _CreateQuestionIndividuallyWidgetState
       'CreateQuestionSuccessfully',
       queryParameters: {
         'title': _model.textController1.text,
-        'time': _model.dropDownValueController?.value,
+        'time': _model.dropDownValue?.title,
         'typeReceived': serializeParam(
           item.reference,
           ParamType.DocumentReference,
