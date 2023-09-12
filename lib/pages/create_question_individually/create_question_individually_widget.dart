@@ -1,3 +1,4 @@
+import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
@@ -78,7 +79,11 @@ class _CreateQuestionIndividuallyWidgetState
     }
 
     if (errorMessage != null) {
-      SnackBarService.show(context, errorMessage);
+      SnackBarService.show(
+        context: context,
+        title: errorMessage,
+        type: SnackBarType.error,
+      );
       return;
     }
 
