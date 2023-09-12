@@ -1,12 +1,7 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'list_questions_model.dart';
 export 'list_questions_model.dart';
 
@@ -74,6 +69,19 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
         ),
       ),
     );
+  }
+
+  String _getAverageReward(List<QuestionNewRecord> items){
+    double total = 0.0;
+    var length = 0;
+    items.forEach((element) {
+      if(element.price != null){
+        total += (element.price ?? 0.0);
+        length++;
+      }
+    });
+    var average = total / length;
+    return "\$$average";
   }
 
   @override
@@ -230,15 +238,7 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
                               10.0,
                             ),
                             child: Text(
-                              valueOrDefault<String>(
-                                formatNumber(
-                                  random_data.randomDouble(1.5, 3.7),
-                                  formatType: FormatType.decimal,
-                                  decimalType: DecimalType.automatic,
-                                  currency: '\$',
-                                ),
-                                '2',
-                              ),
+                              _getAverageReward(columnQuestionNewRecordList),
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium

@@ -28,7 +28,7 @@ class QuestionNewRecord extends FirestoreRecord {
 
   // "price" field.
   double? _price;
-  double get price => _price ?? 0.0;
+  double? get price => _price;
   bool hasPrice() => _price != null;
 
   // "created_at" field.
@@ -67,8 +67,8 @@ class QuestionNewRecord extends FirestoreRecord {
   bool hasId() => _id != null;
 
   // "questionDuration" field.
-  int? _questionDuration;
-  int get questionDuration => _questionDuration ?? 0;
+  String? _questionDuration;
+  String get questionDuration => _questionDuration ?? '';
   bool hasQuestionDuration() => _questionDuration != null;
 
   void _initializeFields() {
@@ -82,7 +82,7 @@ class QuestionNewRecord extends FirestoreRecord {
     _questionText = snapshotData['questionText'] as String?;
     _questionTitle = snapshotData['questionTitle'] as String?;
     _id = castToType<int>(snapshotData['id']);
-    _questionDuration = castToType<int>(snapshotData['questionDuration']);
+    _questionDuration = castToType<String>(snapshotData['questionDuration']);
   }
 
   static CollectionReference get collection =>

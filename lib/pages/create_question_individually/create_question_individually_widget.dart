@@ -98,6 +98,7 @@ class _CreateQuestionIndividuallyWidgetState
             questionText: _model.textController2.text,
             questionType: typeReference,
             questionDuration: _model.dropDownValue?.title ?? QuestionLengthType.fiveDay.title,
+            price: _model.dropDownValue?.money ?? QuestionLengthType.fiveDay.money,
             onSale: true,
           ),
         );
