@@ -65,7 +65,7 @@ class _CreateQuestionIndividuallyWidgetState
       return false;
     }
     context.pushReplacementNamed('CreateQuestion');
-    return true;
+    return false;
   }
 
   void _createQuestion(QuestionTypeRecord item) async {

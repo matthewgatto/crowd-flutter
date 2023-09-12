@@ -1,3 +1,6 @@
+import 'package:crowds/enum/snack_bar_type.dart';
+import 'package:crowds/services/dialog_service.dart';
+import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
 
@@ -44,6 +47,58 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
     super.dispose();
   }
 
+  Future<bool> _cancelQuestion(BuildContext context) async {
+    if (_model.textController.text.isNotEmpty) {
+      DialogService.show(
+        title: "Warning",
+        description: 'Current process will be lost.',
+        description2: "Do you want to cancel the process?",
+        context: context,
+        onApprove: () => context.pushReplacementNamed('ListQuestions'),
+        onCancel: () {},
+      );
+      return false;
+    }
+    context.pushReplacementNamed('ListQuestions');
+    return false;
+  }
+
+  Future<void> _submitAnswer(BuildContext context) async{
+    String? errorMessage;
+
+    if (_model.textController.text.isEmpty) {
+      errorMessage = "The Answer field is required.";
+    }
+
+    if (errorMessage != null) {
+      SnackBarService.show(
+        context: context,
+        title: errorMessage,
+        type: SnackBarType.error,
+      );
+      return;
+    }
+
+    await AnswerCompletedRecord.collection
+        .doc()
+        .set(createAnswerCompletedRecordData(
+      answerText: valueOrDefault<String>(
+        _model.textController.text,
+        'NaN',
+      ),
+      questionTitle: valueOrDefault<String>(
+        widget.titleReceived,
+        'NaN',
+      ),
+      questionText: valueOrDefault<String>(
+        widget.questionReceived,
+        'NaN',
+      ),
+    ));
+
+    context.pushReplacementNamed('AnsweringQuestionSuccessfully');
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<QuestionNewRecord>>(
@@ -69,10 +124,7 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
           );
         }
         return WillPopScope(
-          onWillPop: () async {
-            context.pushReplacementNamed('ListQuestions');
-            return false;
-          },
+          onWillPop: () => _cancelQuestion(context),
           child: Scaffold(
             key: scaffoldKey,
             appBar: AppBar(
@@ -190,26 +242,7 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                       width: double.infinity,
                       height: 50,
                       child: ButtonWidget(
-                        onPressed: () async {
-                          await AnswerCompletedRecord.collection
-                              .doc()
-                              .set(createAnswerCompletedRecordData(
-                            answerText: valueOrDefault<String>(
-                              _model.textController.text,
-                              'NaN',
-                            ),
-                            questionTitle: valueOrDefault<String>(
-                              widget.titleReceived,
-                              'NaN',
-                            ),
-                            questionText: valueOrDefault<String>(
-                              widget.questionReceived,
-                              'NaN',
-                            ),
-                          ));
-
-                          context.pushReplacementNamed('AnsweringQuestionSuccessfully');
-                        },
+                        onPressed: () => _submitAnswer(context),
                         title: 'Submit',
                       ),
                     )
