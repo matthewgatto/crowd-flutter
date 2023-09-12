@@ -177,7 +177,11 @@ class _CreateQuestionIndividuallyWidgetState
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 10.0, 10.0, 10.0),
+                                  10.0,
+                                  10.0,
+                                  10.0,
+                                  10.0,
+                                ),
                                 child: Text(
                                   item.name,
                                   style:
@@ -222,8 +226,8 @@ class _CreateQuestionIndividuallyWidgetState
                                     'Please select length of time question is live',
                                 icon: Icon(
                                   Icons.keyboard_arrow_down_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).secondaryText,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
                                   size: 24.0,
                                 ),
                                 fillColor: FlutterFlowTheme.of(context).accent3,
@@ -233,7 +237,11 @@ class _CreateQuestionIndividuallyWidgetState
                                 borderWidth: 2.0,
                                 borderRadius: 8.0,
                                 margin: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 10.0, 10.0, 10.0),
+                                  10.0,
+                                  10.0,
+                                  10.0,
+                                  10.0,
+                                ),
                                 hidesUnderline: true,
                                 isSearchable: false,
                                 isMultiSelect: false,
@@ -241,7 +249,11 @@ class _CreateQuestionIndividuallyWidgetState
                               SizedBox(height: 20),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 10.0, 10.0, 10.0),
+                                  10.0,
+                                  10.0,
+                                  10.0,
+                                  10.0,
+                                ),
                                 child: Text(
                                   'The price to ask this question is: ',
                                   textAlign: TextAlign.center,
@@ -257,7 +269,11 @@ class _CreateQuestionIndividuallyWidgetState
                                 alignment: AlignmentDirectional(0.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 10.0, 10.0, 10.0),
+                                    10.0,
+                                    10.0,
+                                    10.0,
+                                    10.0,
+                                  ),
                                   child: Text(
                                     formatNumber(
                                       random_data.randomDouble(0.5, 1.25),
