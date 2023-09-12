@@ -1,3 +1,5 @@
+import 'package:crowds/services/dialog_service.dart';
+import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
 
@@ -48,7 +50,38 @@ class _CreateQuestionIndividuallyWidgetState
     super.dispose();
   }
 
+  void _cancelQuestion(BuildContext context) {
+    if (_model.textController1.text.isNotEmpty ||
+        _model.textController2.text.isNotEmpty ||
+        _model.dropDownValue != null) {
+      DialogService.show(
+        title: "Warning",
+        description: 'Current process will be lost.',
+        description2: "Do you want to cancel the process?",
+        context: context,
+        onApprove: () => context.pushReplacementNamed('ListQuestions'),
+        onCancel: () {},
+      );
+      return;
+    }
+  }
+
   void _createQuestion(QuestionTypeRecord item) async {
+    String? errorMessage;
+
+    if (_model.textController1.text.isEmpty) {
+      errorMessage = "The Question title field is required.";
+    } else if (_model.textController2.text.isEmpty) {
+      errorMessage = "The Question text field is required.";
+    } else if (_model.dropDownValue == null) {
+      errorMessage = "The length of Question field is required.";
+    }
+
+    if (errorMessage != null) {
+      SnackBarService.show(context, errorMessage);
+      return;
+    }
+
     var typeReference = serializeParam(
       item.reference,
       ParamType.DocumentReference,
@@ -154,14 +187,15 @@ class _CreateQuestionIndividuallyWidgetState
                                   10.0, 10.0, 10.0, 10.0),
                               child: Text(
                                 item.name,
-                                style: FlutterFlowTheme.of(context).displaySmall,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             SizedBox(height: 20),
                             TextFormFieldWidget(
                               labelText: 'Question title',
                               hintText: 'insert question title here',
-                              controller:_model.textController1,
+                              controller: _model.textController1,
                               validator: _model.textController1Validator
                                   .asValidator(context),
                             ),
@@ -171,7 +205,7 @@ class _CreateQuestionIndividuallyWidgetState
                               hintText: 'insert question text here',
                               maxLines: 10,
                               minLines: 3,
-                              controller:_model.textController2,
+                              controller: _model.textController2,
                               validator: _model.textController2Validator
                                   .asValidator(context),
                             ),
@@ -195,8 +229,8 @@ class _CreateQuestionIndividuallyWidgetState
                                   'Please select length of time question is live',
                               icon: Icon(
                                 Icons.keyboard_arrow_down_rounded,
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryText,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
                                 size: 24.0,
                               ),
                               fillColor: FlutterFlowTheme.of(context).accent3,
@@ -217,6 +251,7 @@ class _CreateQuestionIndividuallyWidgetState
                                   10.0, 10.0, 10.0, 10.0),
                               child: Text(
                                 'The price to ask this question is: ',
+                                textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -263,9 +298,7 @@ class _CreateQuestionIndividuallyWidgetState
                               child: ButtonWidget(
                                 title: 'View list of questions',
                                 color: Theme.of(context).disabledColor,
-                                onPressed: () {
-                                  context.pushReplacementNamed('ListQuestions');
-                                },
+                                onPressed: () => _cancelQuestion(context),
                               ),
                             ),
                           ],
