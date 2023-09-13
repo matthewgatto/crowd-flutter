@@ -1,12 +1,53 @@
+import 'package:crowds/enum/snack_bar_type.dart';
+import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/base_scaffold.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
+class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
 
-  void _forgotPassword(BuildContext context) {}
+  @override
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+}
+
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final _controllerUserName = TextEditingController();
+
+  Future<void> _forgotPassword(BuildContext context) async {
+    String? errorMessage;
+    if (_controllerUserName.text.isEmpty) {
+      errorMessage = "Please enter your email address.";
+    }
+
+    if (errorMessage != null) {
+      SnackBarService.show(
+        context: context,
+        title: errorMessage,
+        type: SnackBarType.error,
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: _controllerUserName.text,
+      );
+
+      context.pushReplacementNamed('loginPage');
+    } on FirebaseAuthException catch (e) {
+      SnackBarService.show(
+        context: context,
+        title: e.message ?? "login problem.",
+        type: SnackBarType.error,
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +60,7 @@ class ForgotPasswordPage extends StatelessWidget {
           TextFormFieldWidget(
             labelText: "Email",
             hintText: "Email",
-            controller: TextEditingController(),
+            controller: _controllerUserName,
           ),
           SizedBox(height: 24),
           SizedBox(height: 16),
