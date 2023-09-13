@@ -119,6 +119,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/answeringQuestion',
           builder: (context, params) => AnsweringQuestionWidget(
             titleReceived: params.getParam('titleReceived', ParamType.String),
+            questionPrice: params.getParam('price', ParamType.double),
             questionReceived:
                 params.getParam('questionReceived', ParamType.String),
           ),

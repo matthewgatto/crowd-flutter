@@ -48,6 +48,10 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
               item.questionText,
               ParamType.String,
             ),
+            'price': serializeParam(
+              item.price,
+              ParamType.double,
+            ),
           }.withoutNulls,
         );
       },

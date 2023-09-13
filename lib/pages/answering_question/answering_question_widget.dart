@@ -17,10 +17,12 @@ class AnsweringQuestionWidget extends StatefulWidget {
     Key? key,
     required this.titleReceived,
     required this.questionReceived,
+    required this.questionPrice,
   }) : super(key: key);
 
   final String? titleReceived;
   final String? questionReceived;
+  final double? questionPrice;
 
   @override
   _AnsweringQuestionWidgetState createState() =>
@@ -198,12 +200,7 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                             ),
                             SizedBox(height: 16),
                             Text(
-                              formatNumber(
-                                random_data.randomDouble(0.5, 1.2),
-                                formatType: FormatType.decimal,
-                                decimalType: DecimalType.automatic,
-                                currency: '\$',
-                              ),
+                              "\$${widget.questionPrice ?? 0.0}",
                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Roboto',
                                     color: Color(0xE339D261),
