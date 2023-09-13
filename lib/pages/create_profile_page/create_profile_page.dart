@@ -40,7 +40,7 @@ class CreateProfilePage extends StatelessWidget {
             height: 50,
             child: ButtonWidget(
               title: "Create",
-              onPressed: () => _create(context),
+              onPressed: () async => _create(context),
             ),
           ),
           SizedBox(height: 30),

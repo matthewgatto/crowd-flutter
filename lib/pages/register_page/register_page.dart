@@ -41,7 +41,7 @@ class RegisterPage extends StatelessWidget {
             height: 50,
             child: ButtonWidget(
               title: "Register",
-              onPressed: () => _register(context),
+              onPressed: () async => _register(context),
             ),
           ),
           SizedBox(height: 16),

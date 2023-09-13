@@ -71,7 +71,7 @@ class AboutUsPage extends StatelessWidget {
               height: 50,
               child: ButtonWidget(
                 title: "Ask and Answer Here",
-                onPressed: () {
+                onPressed: () async {
                   context.pop();
                 },
               ),

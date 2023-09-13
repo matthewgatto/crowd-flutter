@@ -18,9 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   final _controllerUserName = TextEditingController();
   final _controllerPassword = TextEditingController();
 
-  void _forgotPassword(BuildContext context) {}
+  void _forgotPassword(BuildContext context) {
+    context.pushReplacementNamed('forgotPasswordPage');
+  }
 
-  void _register(BuildContext context) {}
+  void _register(BuildContext context) {
+    context.pushReplacementNamed('registerPage');
+  }
 
   Future<void> _login(BuildContext context) async {
     try {
@@ -66,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 50,
             child: ButtonWidget(
               title: "Login",
-              onPressed: () => _login(context),
+              onPressed: () async => await _login(context),
             ),
           ),
           SizedBox(height: 16),

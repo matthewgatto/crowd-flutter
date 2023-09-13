@@ -133,7 +133,7 @@ class _CreateQuestionWidgetState extends State<CreateQuestionWidget> {
                   padding: EdgeInsets.symmetric(horizontal: 26),
                   child: ButtonWidget(
                     title: "Cancel",
-                    onPressed: () {
+                    onPressed: () async {
                       context.pop();
                     },
                   ),

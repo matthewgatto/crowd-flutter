@@ -28,7 +28,7 @@ class ForgotPasswordPage extends StatelessWidget {
             height: 50,
             child: ButtonWidget(
               title: "Send reset password email",
-              onPressed: () => _forgotPassword(context),
+              onPressed: () async => _forgotPassword(context),
             ),
           ),
           SizedBox(height: 30),

@@ -32,7 +32,7 @@ class ProfileCreatedPage extends StatelessWidget {
             height: 50,
             child: ButtonWidget(
               title: "Go to the Crowds App",
-              onPressed: () => _goToApp(context),
+              onPressed: () async => _goToApp(context),
             ),
           ),
           SizedBox(height: 30),

@@ -91,7 +91,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height * 0.1,
                             child: ButtonWidget(
-                              onPressed: () {
+                              onPressed: () async {
                                 context.pushNamed('CreateQuestion');
                               },
                               title: 'Ask a question',
@@ -102,7 +102,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height * 0.1,
                             child: ButtonWidget(
-                              onPressed: () {
+                              onPressed: () async {
                                 context.pushNamed('ListQuestions');
                               },
                               title: 'Answer a question',

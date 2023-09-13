@@ -1,12 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'start_page_model.dart';
 export 'start_page_model.dart';
 
@@ -56,6 +54,18 @@ class _StartPageWidgetState extends State<StartPageWidget>
           !anim.applyInitialState),
       this,
     );
+
+    Future.delayed(Duration(seconds: 3),(){
+      _goToNextPage();
+    });
+  }
+
+  void _goToNextPage(){
+    if(FirebaseAuth.instance.currentUser == null){
+      context.pushReplacementNamed('loginPage');
+    }else{
+      context.pushReplacementNamed('HomePage');
+    }
   }
 
   @override
@@ -130,36 +140,6 @@ class _StartPageWidgetState extends State<StartPageWidget>
                           fontFamily: 'Roboto',
                           color: FlutterFlowTheme.of(context).customColor5,
                         ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      context.pushNamed('HomePage');
-                    },
-                    text: 'Get Started',
-                    options: FFButtonOptions(
-                      width: 270.0,
-                      height: 70.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).customColor2,
-                      textStyle:
-                          FlutterFlowTheme.of(context).displaySmall.override(
-                                fontFamily: 'Roboto',
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                      elevation: 4.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
                   ),
                 ),
               ],

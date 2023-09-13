@@ -119,7 +119,7 @@ class _AnsweringQuestionSuccessfullyWidgetState
                         height: 80,
                         child: ButtonWidget(
                           title: 'Ask a question',
-                          onPressed: () {
+                          onPressed: () async {
                             context.pushReplacementNamed('CreateQuestion');
                           },
                         ),
@@ -131,7 +131,7 @@ class _AnsweringQuestionSuccessfullyWidgetState
                         child: ButtonWidget(
                           title: 'View list of questions to answer',
                           color: Colors.deepOrangeAccent,
-                          onPressed: () {
+                          onPressed: () async {
                             context.pushReplacementNamed('ListQuestions');
                           },
                         ),

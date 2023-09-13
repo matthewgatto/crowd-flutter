@@ -305,7 +305,7 @@ class _CreateQuestionIndividuallyWidgetState
                                 height: 60,
                                 child: ButtonWidget(
                                   title: 'Submit Question',
-                                  onPressed: () => _createQuestion(item),
+                                  onPressed: () async => _createQuestion(item),
                                 ),
                               ),
                               SizedBox(height: 20),
