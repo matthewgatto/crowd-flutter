@@ -6,6 +6,7 @@ class TextFormFieldWidget<T> extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
   final FormFieldValidator<String?>? validator;
+  final bool obscureText;
   final int? minLines;
   final int? maxLines;
 
@@ -13,6 +14,7 @@ class TextFormFieldWidget<T> extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     required this.controller,
+    this.obscureText = false,
     this.validator,
     this.minLines,
     this.maxLines,
@@ -23,8 +25,7 @@ class TextFormFieldWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      autofocus: true,
-      obscureText: false,
+      obscureText: obscureText,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         isDense: true,
@@ -34,8 +35,8 @@ class TextFormFieldWidget<T> extends StatelessWidget {
       ),
       style: FlutterFlowTheme.of(context).bodyMedium,
       textAlign: TextAlign.start,
-      minLines: minLines,
-      maxLines: maxLines,
+      minLines: obscureText ? 1 : minLines,
+      maxLines: obscureText ? 1 : maxLines,
       validator: validator,
     );
   }
