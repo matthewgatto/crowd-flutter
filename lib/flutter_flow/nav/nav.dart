@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:crowds/pages/about_us_page/about_us_page.dart';
+import 'package:crowds/pages/create_profile_page/create_profile_page.dart';
 import 'package:crowds/pages/forgot_password_page/forgot_password_page.dart';
 import 'package:crowds/pages/login_page/login_page.dart';
 import 'package:crowds/pages/register_page/register_page.dart';
@@ -155,6 +156,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ForgotPasswordPage',
           path: '/forgotPasswordPage',
           builder: (context, params) => ForgotPasswordPage(),
+        ),
+        FFRoute(
+          name: 'CreateProfilePage',
+          path: '/createProfilePage',
+          builder: (context, params) => CreateProfilePage(),
         ),
         FFRoute(
           name: 'AnsweringQuestionSuccessfully',
