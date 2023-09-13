@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:crowds/pages/about_us_page/about_us_page.dart';
+import 'package:crowds/pages/forgot_password_page/forgot_password_page.dart';
+import 'package:crowds/pages/login_page/login_page.dart';
+import 'package:crowds/pages/register_page/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
@@ -141,7 +144,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'LoginPage',
           path: '/loginPage',
-          builder: (context, params) => LoginPageWidget(),
+          builder: (context, params) => LoginPage(),
+        ),
+        FFRoute(
+          name: 'RegisterPage',
+          path: '/registerPage',
+          builder: (context, params) => RegisterPage(),
+        ),
+        FFRoute(
+          name: 'ForgotPasswordPage',
+          path: '/forgotPasswordPage',
+          builder: (context, params) => ForgotPasswordPage(),
         ),
         FFRoute(
           name: 'AnsweringQuestionSuccessfully',

@@ -9,7 +9,6 @@ export '/pages/answering_question/answering_question_widget.dart'
     show AnsweringQuestionWidget;
 export '/pages/create_question_multi_select/create_question_multi_select_widget.dart'
     show CreateQuestionMultiSelectWidget;
-export '/pages/login_page/login_page_widget.dart' show LoginPageWidget;
 export '/pages/answering_question_successfully/answering_question_successfully_widget.dart'
     show AnsweringQuestionSuccessfullyWidget;
 export '/pages/list_questions/list_questions_widget.dart'
