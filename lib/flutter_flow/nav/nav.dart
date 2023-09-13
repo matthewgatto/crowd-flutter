@@ -4,6 +4,7 @@ import 'package:crowds/pages/about_us_page/about_us_page.dart';
 import 'package:crowds/pages/create_profile_page/create_profile_page.dart';
 import 'package:crowds/pages/forgot_password_page/forgot_password_page.dart';
 import 'package:crowds/pages/login_page/login_page.dart';
+import 'package:crowds/pages/profile_created_page/profile_created_page.dart';
 import 'package:crowds/pages/register_page/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -79,7 +80,7 @@ class AppStateNotifier extends ChangeNotifier {
 }
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: '/',
+      initialLocation: '/profileCreatedPage',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
@@ -161,6 +162,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CreateProfilePage',
           path: '/createProfilePage',
           builder: (context, params) => CreateProfilePage(),
+        ),
+        FFRoute(
+          name: 'ProfileCreatedPage',
+          path: '/profileCreatedPage',
+          builder: (context, params) => ProfileCreatedPage(),
         ),
         FFRoute(
           name: 'AnsweringQuestionSuccessfully',
