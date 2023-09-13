@@ -1,11 +1,14 @@
 import 'package:crowds/widgets/base_scaffold.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileCreatedPage extends StatelessWidget {
   const ProfileCreatedPage({super.key});
 
-  void _goToApp(BuildContext context) {}
+  void _goToApp(BuildContext context) {
+    context.pushReplacementNamed('StartPage');
+  }
 
   @override
   Widget build(BuildContext context) {
