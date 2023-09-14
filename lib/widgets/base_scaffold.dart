@@ -75,15 +75,18 @@ class BaseScaffold extends StatelessWidget {
               ),
               Visibility(
                 visible: icon != null,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).cardColor,
-                  ),
-                  child: Icon(
-                    icon,
-                    color: mainColor,
-                    size: iconSize,
+                child: Hero(
+                  tag: "profileButton",
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).cardColor,
+                    ),
+                    child: Icon(
+                      icon,
+                      color: mainColor,
+                      size: iconSize,
+                    ),
                   ),
                 ),
               ),

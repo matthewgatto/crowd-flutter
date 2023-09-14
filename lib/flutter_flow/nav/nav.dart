@@ -5,6 +5,7 @@ import 'package:crowds/pages/create_profile_page/create_profile_page.dart';
 import 'package:crowds/pages/forgot_password_page/forgot_password_page.dart';
 import 'package:crowds/pages/login_page/login_page.dart';
 import 'package:crowds/pages/profile_created_page/profile_created_page.dart';
+import 'package:crowds/pages/profile_page/profile_page.dart';
 import 'package:crowds/pages/register_page/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -170,6 +171,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ProfileCreatedPage',
           path: '/profileCreatedPage',
           builder: (context, params) => ProfileCreatedPage(),
+        ),
+        FFRoute(
+          name: 'ProfilePage',
+          path: '/profilePage',
+          builder: (context, params) => ProfilePage(),
         ),
         FFRoute(
           name: 'AnsweringQuestionSuccessfully',

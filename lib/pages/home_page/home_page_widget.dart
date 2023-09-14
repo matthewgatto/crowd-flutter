@@ -54,75 +54,96 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
         ),
         child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Card(
+                margin: EdgeInsets.all(16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    24.0,
+                    54.0,
+                    24.0,
+                    54.0,
                   ),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 54.0, 24.0, 24.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Text(
-                              'Crowds',
-                              textAlign: TextAlign.center,
-                              style:
-                                  FlutterFlowTheme.of(context).bodyMedium.override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 48.0,
-                                      ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Text("What would you like to do today?"),
-                          SizedBox(height: 50),
-                          Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.1,
-                            child: ButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('CreateQuestion');
-                              },
-                              title: 'Ask a question',
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.1,
-                            child: ButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('ListQuestions');
-                              },
-                              title: 'Answer a question',
-                              color: Colors.deepOrangeAccent,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          TextButton(
-                            onPressed: () {
-                              context.pushNamed('aboutUs');
-                            },
-                            child: Text("How does Crowds work?"),
-                          ),
-                        ],
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Text(
+                          'Crowds',
+                          textAlign: TextAlign.center,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 48.0,
+                                  ),
+                        ),
                       ),
+                      SizedBox(height: 20),
+                      Text("What would you like to do today?"),
+                      SizedBox(height: 50),
+                      Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        child: ButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed('CreateQuestion');
+                          },
+                          title: 'Ask a question',
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        child: ButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed('ListQuestions');
+                          },
+                          title: 'Answer a question',
+                          color: Colors.deepOrangeAccent,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextButton(
+                        onPressed: () {
+                          context.pushNamed('aboutUs');
+                        },
+                        child: Text("How does Crowds work?"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  context.pushNamed("profilePage");
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.5,
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).cardColor,
+                  ),
+                  child: Hero(
+                    tag: "profileButton",
+                    child: Icon(
+                      Icons.account_circle,
+                      color: FlutterFlowTheme.of(context).splash,
+                      size: 50,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
