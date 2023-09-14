@@ -62,15 +62,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
     try {
       var user = FirebaseAuth.instance.currentUser;
-      FirebaseFirestore.instance
+      var doc = FirebaseFirestore.instance
           .collection('userInformation')
-          .doc(user?.uid)
-          .set({
+          .doc(user?.uid);
+      
+      doc.update({
         "fullName": _fullNameController.text,
         "stateInUS": _stateController.text,
         "venmoUserName": _venmoController.text,
       });
-
       context.pop();
     } catch (e) {
       print(e);

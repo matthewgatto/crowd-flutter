@@ -48,6 +48,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         "fullName": _fullNameController.text,
         "stateInUS": _stateController.text,
         "venmoUserName": _venmoController.text,
+        "answerQuestion": false,
       });
 
       context.pushReplacementNamed('ProfileCreatedPage');
