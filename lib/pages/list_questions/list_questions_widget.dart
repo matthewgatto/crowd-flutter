@@ -2,8 +2,6 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'list_questions_model.dart';
-export 'list_questions_model.dart';
 
 class ListQuestionsWidget extends StatefulWidget {
   const ListQuestionsWidget({
@@ -18,22 +16,6 @@ class ListQuestionsWidget extends StatefulWidget {
 }
 
 class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
-  late ListQuestionsModel _model;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _model = createModel(context, () => ListQuestionsModel());
-  }
-
-  @override
-  void dispose() {
-    _model.dispose();
-    super.dispose();
-  }
-
   Widget _itemWidget(QuestionNewRecord item) {
     return InkWell(
       onTap: () async {
@@ -85,7 +67,7 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
       }
     });
     var average = total / length;
-    return "\$$average";
+    return "\$${average.isNaN ? 0.0 : average}";
   }
 
   @override
@@ -112,7 +94,6 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
         }
         List<QuestionNewRecord> columnQuestionNewRecordList = snapshot.data!;
         return Scaffold(
-          key: scaffoldKey,
           backgroundColor: Color(0xFFF5F5F5),
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).splash,
