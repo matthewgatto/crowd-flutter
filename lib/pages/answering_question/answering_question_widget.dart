@@ -4,6 +4,7 @@ import 'package:crowds/services/dialog_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -99,6 +100,11 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
       ),
     ));
 
+    var user = FirebaseAuth.instance.currentUser;
+    var doc = FirebaseFirestore.instance
+        .collection('userInformation')
+        .doc(user?.uid);
+    await doc.update({"answerQuestion": true});
     context.pushReplacementNamed('AnsweringQuestionSuccessfully');
   }
 
