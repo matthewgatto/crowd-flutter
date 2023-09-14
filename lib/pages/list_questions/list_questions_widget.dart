@@ -1,3 +1,5 @@
+import 'package:crowds/widgets/base_scaffold_list_widget.dart';
+
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -57,11 +59,12 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
     );
   }
 
-  String _getAverageReward(List<QuestionNewRecord> items){
+  String _getAverageReward(List<QuestionNewRecord>? data) {
+    List<QuestionNewRecord> items = data ?? [];
     double total = 0.0;
     var length = 0;
     items.forEach((element) {
-      if(element.price != null){
+      if (element.price != null) {
         total += (element.price ?? 0.0);
         length++;
       }
@@ -74,176 +77,65 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<QuestionNewRecord>>(
       stream: queryQuestionNewRecord(),
-      builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
-          return Scaffold(
-            backgroundColor: Color(0xFFF5F5F5),
-            body: Center(
-              child: SizedBox(
-                width: 50.0,
-                height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).primary,
-                  ),
+      builder: (context, snapshot) => BaseScaffoldListWidget(
+        title: 'Select a questions: ',
+        child: Builder(
+          builder: (context) {
+            if (snapshot.data == null) return SizedBox(width: double.infinity);
+            List<QuestionNewRecord> items = snapshot.data!;
+
+            return ListView.separated(
+              itemCount: items.length,
+              separatorBuilder: (context, index) => SizedBox(height: 8),
+              itemBuilder: (context, index) => _itemWidget(items[index]),
+            );
+          },
+        ),
+        bottomWidget: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(
+            20.0,
+            0.0,
+            20.0,
+            20.0,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
+                child: Text(
+                  'Right now the average reward for answering a question is: ',
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Roboto',
+                        color: Color(0xFF4B39EF),
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
-            ),
-          );
-        }
-        List<QuestionNewRecord> columnQuestionNewRecordList = snapshot.data!;
-        return Scaffold(
-          backgroundColor: Color(0xFFF5F5F5),
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).splash,
-            title: Text('Answering...'),
-          ),
-          body: Container(
-            width: MediaQuery.sizeOf(context).width * 1.0,
-            height: MediaQuery.sizeOf(context).height * 1.0,
-            decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.asset(
-                  'assets/images/page_background@2x.png',
-                ).image,
-              ),
-            ),
-            child: Container(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                24.0,
-                24.0,
-                24.0,
-                24.0,
-              ),
-              color: FlutterFlowTheme.of(context).customColor5,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
-                    child: Text(
-                      'Select one of the following questions: ',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).titleMedium.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        ListView.separated(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 21,
-                            horizontal: 16,
-                          ),
-                          itemCount: columnQuestionNewRecordList.length,
-                          separatorBuilder: (context, index) => SizedBox(
-                            height: 8,
-                          ),
-                          itemBuilder: (context, index) => _itemWidget(
-                            columnQuestionNewRecordList[index],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            height: 20,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                              colors: [
-                                Color(0xffEEEEEE),
-                                Color(0x7eeeeeee),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            )),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: 20,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                              colors: [
-                                Color(0xffEEEEEE),
-                                Color(0x7eeeeeee),
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            )),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SafeArea(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        20.0,
-                        0.0,
-                        20.0,
-                        20.0,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  0.0,
+                  10.0,
+                  0.0,
+                  10.0,
+                ),
+                child: Text(
+                  _getAverageReward(snapshot.data),
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Roboto',
+                        color: Color(0xE339D261),
+                        fontSize: 48.0,
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 20.0, 20.0, 20.0),
-                            child: Text(
-                              'Right now the average reward for answering a question is: ',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: Color(0xFF4B39EF),
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0,
-                              10.0,
-                              0.0,
-                              10.0,
-                            ),
-                            child: Text(
-                              _getAverageReward(columnQuestionNewRecordList),
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: Color(0xE339D261),
-                                    fontSize: 48.0,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

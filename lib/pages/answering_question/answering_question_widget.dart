@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
@@ -129,121 +130,137 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
           onWillPop: () => _cancelQuestion(context),
           child: Scaffold(
             key: scaffoldKey,
-            appBar: AppBar(
-              title: Text('Answering...'),
-              backgroundColor: FlutterFlowTheme.of(context).splash,
-            ),
-            backgroundColor: FlutterFlowTheme.of(context).customColor5,
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                  24.0,
-                  10.0,
-                  24.0,
-                  10.0,
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: Image.asset(
+                    'assets/images/page_background@2x.png',
+                  ).image,
                 ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0,
-                                10.0,
-                                0.0,
-                                10.0,
-                              ),
-                              child: Text(
-                                valueOrDefault<String>(
-                                  widget.titleReceived,
-                                  'Question Title',
-                                ),
-                                textAlign: TextAlign.start,
-                                maxLines: 1,
-                                style: FlutterFlowTheme.of(context).displaySmall,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0,
-                                10.0,
-                                10.0,
-                                10.0,
-                              ),
-                              child: Text(
-                                widget.questionReceived!,
-                                style: FlutterFlowTheme.of(context).bodyMedium,
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            TextFormFieldWidget(
-                              controller: _model.textController,
-                              labelText: 'Answer',
-                              hintText: 'Type Answer Here',
-                              minLines: 10,
-                              maxLines: 10,
-                              validator:
-                                  _model.textControllerValidator.asValidator(context),
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Rewards Estimates',
-                              style: FlutterFlowTheme.of(context).displaySmall,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'The price to ask this question is:',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              "\$${widget.questionPrice ?? 0.0}",
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Roboto',
-                                    color: Color(0xE339D261),
-                                    fontSize: 36.0,
-                                  ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'to',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              formatNumber(
-                                random_data.randomDouble(1.9, 4.3),
-                                formatType: FormatType.decimal,
-                                decimalType: DecimalType.automatic,
-                                currency: '\$',
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Roboto',
-                                    color: Color(0xE339D261),
-                                    fontSize: 36.0,
-                                  ),
-                            ),
-                            Text(
-                              'for your submitted answer.',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                            ),
-                            SizedBox(height: 36),
-                          ],
-                        ),
-                      ),
+              ),
+              child: SafeArea(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  margin: EdgeInsets.all(16),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      24.0,
+                      10.0,
+                      24.0,
+                      10.0,
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: ButtonWidget(
-                        onPressed: () => _submitAnswer(context),
-                        title: 'Submit',
-                      ),
-                    )
-                  ],
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.arrow_back_ios),
+                                      onPressed: () => context.pop(),
+                                    ),
+                                    Expanded(
+                                      child: AutoSizeText(
+                                        "Answering...",
+                                        maxLines: 1,
+                                        style: FlutterFlowTheme.of(context).displaySmall,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    valueOrDefault<String>(
+                                      widget.titleReceived,
+                                      'Question Title',
+                                    ),
+                                    style: FlutterFlowTheme.of(context).displaySmall,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    widget.questionReceived!,
+                                    style: FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                ),
+                                SizedBox(height: 16),
+                                TextFormFieldWidget(
+                                  controller: _model.textController,
+                                  labelText: 'Answer',
+                                  hintText: 'Type Answer Here',
+                                  minLines: 10,
+                                  maxLines: 10,
+                                  validator:
+                                      _model.textControllerValidator.asValidator(context),
+                                ),
+                                SizedBox(height: 16),
+                                Text(
+                                  'Rewards Estimates',
+                                  style: FlutterFlowTheme.of(context).displaySmall,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'The price to ask this question is:',
+                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                                SizedBox(height: 16),
+                                Text(
+                                  "\$${widget.questionPrice ?? 0.0}",
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                        fontFamily: 'Roboto',
+                                        color: Color(0xE339D261),
+                                        fontSize: 36.0,
+                                      ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'to',
+                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  formatNumber(
+                                    random_data.randomDouble(1.9, 4.3),
+                                    formatType: FormatType.decimal,
+                                    decimalType: DecimalType.automatic,
+                                    currency: '\$',
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                        fontFamily: 'Roboto',
+                                        color: Color(0xE339D261),
+                                        fontSize: 36.0,
+                                      ),
+                                ),
+                                Text(
+                                  'for your submitted answer.',
+                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                                SizedBox(height: 36),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ButtonWidget(
+                            onPressed: () => _submitAnswer(context),
+                            title: 'Submit',
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

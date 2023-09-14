@@ -97,8 +97,10 @@ class _CreateQuestionIndividuallyWidgetState
             questionTitle: _model.textController1.text,
             questionText: _model.textController2.text,
             questionType: typeReference,
-            questionDuration: _model.dropDownValue?.title ?? QuestionLengthType.fiveDay.title,
-            price: _model.dropDownValue?.money ?? QuestionLengthType.fiveDay.money,
+            questionDuration:
+                _model.dropDownValue?.title ?? QuestionLengthType.fiveDay.title,
+            price:
+                _model.dropDownValue?.money ?? QuestionLengthType.fiveDay.money,
             onSale: true,
           ),
         );
@@ -143,14 +145,7 @@ class _CreateQuestionIndividuallyWidgetState
           onWillPop: () => _cancelQuestion(context),
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Color(0xFFF5F5F5),
-            appBar: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).splash,
-              title: Text('Asking a question ...'),
-            ),
             body: Container(
-              width: MediaQuery.sizeOf(context).width * 1.0,
-              height: MediaQuery.sizeOf(context).height * 1.0,
               decoration: BoxDecoration(
                 color: Color(0xFFEEEEEE),
                 image: DecorationImage(
@@ -160,127 +155,121 @@ class _CreateQuestionIndividuallyWidgetState
                   ).image,
                 ),
               ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16)),
-                        ),
-                        margin: EdgeInsets.all(16),
-                        child: Padding(
-                          padding: EdgeInsets.all(24),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0,
-                                  10.0,
-                                  10.0,
-                                  10.0,
-                                ),
-                                child: Text(
-                                  item.name,
-                                  style:
-                                      FlutterFlowTheme.of(context).displaySmall,
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormFieldWidget(
-                                labelText: 'Question title',
-                                hintText: 'insert question title here',
-                                controller: _model.textController1,
-                                validator: _model.textController1Validator
-                                    .asValidator(context),
-                              ),
-                              SizedBox(height: 20),
-                              TextFormFieldWidget(
-                                labelText: 'Question text',
-                                hintText: 'insert question text here',
-                                maxLines: 10,
-                                minLines: 3,
-                                controller: _model.textController2,
-                                validator: _model.textController2Validator
-                                    .asValidator(context),
-                              ),
-                              SizedBox(height: 20),
-                              DropdownButton2<QuestionLengthType?>(
-                                value: _model.dropDownValue,
-                                customButton: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black12,
-                                    border: Border.all(color: Colors.black26),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+              child: SafeArea(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                          ),
+                          margin: EdgeInsets.all(16),
+                          child: Padding(
+                            padding: EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                    10.0,
+                                    10.0,
+                                    10.0,
+                                    10.0,
                                   ),
-                                  height: 50,
-                                  padding: EdgeInsets.all(10),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: AutoSizeText(
-                                              _model.dropDownValue != null ?
-                                              (_model.dropDownValue as  QuestionLengthType).title
-                                                  : "Please select length of time question is live",
-                                            maxLines: 1,
-                                          ),
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () => _cancelQuestion(context),
+                                        child: Icon(Icons.arrow_back_ios),
+                                      ),
+                                      SizedBox(width: 16),
+                                      Expanded(
+                                        child: Text(
+                                          item.name,
+                                          style: FlutterFlowTheme.of(context)
+                                              .displaySmall,
                                         ),
-                                        Icon(Icons.arrow_drop_down),
-                                      ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                TextFormFieldWidget(
+                                  labelText: 'Question title',
+                                  hintText: 'insert question title here',
+                                  controller: _model.textController1,
+                                  validator: _model.textController1Validator
+                                      .asValidator(context),
+                                ),
+                                SizedBox(height: 20),
+                                TextFormFieldWidget(
+                                  labelText: 'Question text',
+                                  hintText: 'insert question text here',
+                                  maxLines: 10,
+                                  minLines: 3,
+                                  controller: _model.textController2,
+                                  validator: _model.textController2Validator
+                                      .asValidator(context),
+                                ),
+                                SizedBox(height: 20),
+                                DropdownButton2<QuestionLengthType?>(
+                                  value: _model.dropDownValue,
+                                  customButton: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black12,
+                                      border: Border.all(color: Colors.black26),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                    height: 50,
+                                    padding: EdgeInsets.all(10),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: AutoSizeText(
+                                              _model.dropDownValue != null
+                                                  ? (_model.dropDownValue
+                                                          as QuestionLengthType)
+                                                      .title
+                                                  : "Please select length of time question is live",
+                                              maxLines: 1,
+                                            ),
+                                          ),
+                                          Icon(Icons.arrow_drop_down),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                  underline: SizedBox(),
+                                  dropdownStyleData: DropdownStyleData(
+                                      decoration: BoxDecoration(
+                                    color: Color(0xFFEEEEEE),
+                                  )),
+                                  isExpanded: true,
+                                  items: [
+                                    QuestionLengthType.fiveMinute,
+                                    QuestionLengthType.fiftyMinute,
+                                    QuestionLengthType.fiveDay,
+                                  ]
+                                      .map(
+                                        (e) =>
+                                            DropdownMenuItem<QuestionLengthType>(
+                                          value: e,
+                                          child: Text(e.title),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (val) => setState(
+                                    () => _model.dropDownValue = val,
+                                  ),
                                 ),
-                                underline: SizedBox(),
-                                dropdownStyleData: DropdownStyleData(
-                                    decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                )),
-
-                                isExpanded: true,
-                                items: [
-                                  QuestionLengthType.fiveMinute,
-                                  QuestionLengthType.fiftyMinute,
-                                  QuestionLengthType.fiveDay,
-                                ]
-                                    .map(
-                                      (e) =>
-                                          DropdownMenuItem<QuestionLengthType>(
-                                        value: e,
-                                        child: Text(e.title),
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (val) => setState(
-                                  () => _model.dropDownValue = val,
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0,
-                                  10.0,
-                                  10.0,
-                                  10.0,
-                                ),
-                                child: Text(
-                                  'The price to ask this question is: ',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 22.0,
-                                      ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
+                                SizedBox(height: 20),
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                     10.0,
                                     10.0,
@@ -288,41 +277,62 @@ class _CreateQuestionIndividuallyWidgetState
                                     10.0,
                                   ),
                                   child: Text(
-                                    "\$${_model.dropDownValue?.money ?? '0.0'}",
+                                    'The price to ask this question is: ',
+                                    textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Roboto',
-                                          color: Color(0xE339D261),
-                                          fontSize: 36.0,
+                                          fontSize: 22.0,
                                         ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              SizedBox(
-                                width: double.infinity,
-                                height: 60,
-                                child: ButtonWidget(
-                                  title: 'Submit Question',
-                                  onPressed: () async => _createQuestion(item),
+                                Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                      10.0,
+                                      10.0,
+                                      10.0,
+                                      10.0,
+                                    ),
+                                    child: Text(
+                                      "\$${_model.dropDownValue?.money ?? '0.0'}",
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: Color(0xE339D261),
+                                            fontSize: 36.0,
+                                          ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              SizedBox(
-                                width: double.infinity,
-                                height: 60,
-                                child: ButtonWidget(
-                                  title: 'View list of questions',
-                                  color: Theme.of(context).disabledColor,
-                                  onPressed: () => _cancelQuestion(context),
+                                SizedBox(height: 20),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: ButtonWidget(
+                                    title: 'Submit Question',
+                                    onPressed: () async => _createQuestion(item),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 20),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: ButtonWidget(
+                                    title: 'View list of questions',
+                                    color: Theme.of(context).disabledColor,
+                                    onPressed: () => _cancelQuestion(context),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
