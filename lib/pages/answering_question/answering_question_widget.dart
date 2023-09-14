@@ -196,7 +196,7 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                 SizedBox(height: 16),
                                 TextFormFieldWidget(
                                   controller: _model.textController,
-                                  labelText: 'Answer',
+                                  labelText: '',
                                   hintText: 'Type Answer Here',
                                   minLines: 10,
                                   maxLines: 10,
