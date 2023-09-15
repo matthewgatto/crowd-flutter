@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
-import 'package:crowds/services/profile_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
@@ -10,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'answering_question_model.dart';
 export 'answering_question_model.dart';
@@ -36,7 +34,10 @@ class AnsweringQuestionWidget extends StatefulWidget {
 
 class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
   late AnsweringQuestionModel _model;
+  var creatorCut = 0.49;
+  var questionPrice = 4.99;
 
+  get answerPrice => questionPrice - creatorCut;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -92,6 +93,10 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
           answerBy: FirebaseAuth.instance.currentUser?.uid,
           createdAt: Timestamp.now(),
           modifiedAt: Timestamp.now(),
+          questionId: valueOrDefault<String>(
+            widget.id,
+            'NaN',
+          ),
           answerText: valueOrDefault<String>(
             _model.textController.text,
             'NaN',
@@ -108,14 +113,31 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
     context.pushReplacementNamed('AnsweringQuestionSuccessfully');
   }
 
+  Future<int> _getRewardQuery() async {
+    var usersThatAnswerQuestion = await AnswerCompletedRecord.collection
+        .where("questionId", isEqualTo: widget.id)
+        .get();
+    var answerCount = usersThatAnswerQuestion.size;
+    return answerCount.isInfinite || answerCount.isNaN ? 0 : answerCount;
+  }
+
   @override
   Widget build(BuildContext context) {
+    String _getStartRange(int userCount) {
+      double userCut = answerPrice / userCount;
+      return "\$${userCut.toStringAsFixed(2)}";
+    }
+
+    String _getEndRange(int userCount) {
+      double userCut = answerPrice / userCount;
+      return "\$${userCut.toStringAsFixed(2)}";
+    }
+
     return StreamBuilder<List<QuestionNewRecord>>(
       stream: queryQuestionNewRecord(
         singleRecord: true,
       ),
       builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: Color(0xFFF5F5F5),
@@ -225,37 +247,40 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                                 SizedBox(height: 16),
-                                Text(
-                                  "\$${widget.questionPrice ?? 0.0}",
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: Color(0xE339D261),
-                                        fontSize: 36.0,
+                                FutureBuilder(
+                                  initialData: 0,
+                                  future: _getRewardQuery(),
+                                  builder: (context, snapshot) => Column(
+                                    children: [
+                                      Text(
+                                        _getStartRange(snapshot.data ?? 0),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color: Color(0xE339D261),
+                                              fontSize: 36.0,
+                                            ),
                                       ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'to',
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  formatNumber(
-                                    random_data.randomDouble(1.9, 4.3),
-                                    formatType: FormatType.decimal,
-                                    decimalType: DecimalType.automatic,
-                                    currency: '\$',
+                                      SizedBox(height: 8),
+                                      Text(
+                                        'to',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        _getEndRange(snapshot.data ?? 0),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color: Color(0xE339D261),
+                                              fontSize: 36.0,
+                                            ),
+                                      ),
+                                    ],
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: Color(0xE339D261),
-                                        fontSize: 36.0,
-                                      ),
                                 ),
                                 Text(
                                   'for your submitted answer.',
