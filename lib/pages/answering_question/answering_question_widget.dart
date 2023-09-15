@@ -34,10 +34,10 @@ class AnsweringQuestionWidget extends StatefulWidget {
 
 class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
   late AnsweringQuestionModel _model;
-  var creatorCut = 0.49;
-  var questionPrice = 4.99;
-
-  get answerPrice => questionPrice - creatorCut;
+  final creatorCut = 0.1;
+  final questionPrice = 4.99;
+  final priceGap = 0.25;
+  get answerPrice => questionPrice - (questionPrice * creatorCut);
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -125,11 +125,13 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
   Widget build(BuildContext context) {
     String _getStartRange(int userCount) {
       double userCut = answerPrice / userCount;
+      userCut += userCut * priceGap;
       return "\$${userCut.toStringAsFixed(2)}";
     }
 
     String _getEndRange(int userCount) {
       double userCut = answerPrice / userCount;
+      userCut -= userCut * priceGap;
       return "\$${userCut.toStringAsFixed(2)}";
     }
 
