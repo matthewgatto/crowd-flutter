@@ -299,7 +299,8 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                             onPressed: () => _submitAnswer(context),
                             title: 'Submit',
                           ),
-                        )
+                        ),
+                        SizedBox(height: 16),
                       ],
                     ),
                   ),
