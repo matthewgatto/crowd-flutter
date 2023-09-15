@@ -125,13 +125,13 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
   Widget build(BuildContext context) {
     String _getStartRange(int userCount) {
       double userCut = answerPrice / userCount;
-      userCut += userCut * priceGap;
+      userCut -= userCut * priceGap;
       return "\$${userCut.toStringAsFixed(2)}";
     }
 
     String _getEndRange(int userCount) {
       double userCut = answerPrice / userCount;
-      userCut -= userCut * priceGap;
+      userCut += userCut * priceGap;
       return "\$${userCut.toStringAsFixed(2)}";
     }
 
