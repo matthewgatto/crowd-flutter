@@ -1,63 +1,17 @@
+import 'package:crowds/pages/list_questions/question_item_widget.dart';
 import 'package:crowds/widgets/base_scaffold_list_widget.dart';
 
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
-class ListQuestionsWidget extends StatefulWidget {
+class ListQuestionsWidget extends StatelessWidget {
   const ListQuestionsWidget({
     Key? key,
     this.gameCode,
   }) : super(key: key);
 
   final int? gameCode;
-
-  @override
-  _ListQuestionsWidgetState createState() => _ListQuestionsWidgetState();
-}
-
-class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
-  Widget _itemWidget(QuestionNewRecord item) {
-    return InkWell(
-      onTap: () async {
-        context.pushReplacementNamed(
-          'AnsweringQuestion',
-          queryParameters: {
-            'titleReceived': serializeParam(
-              item.questionTitle,
-              ParamType.String,
-            ),
-            'questionReceived': serializeParam(
-              item.questionText,
-              ParamType.String,
-            ),
-            'price': serializeParam(
-              item.price,
-              ParamType.double,
-            ),
-          }.withoutNulls,
-        );
-      },
-      child: Card(
-        margin: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Icon(Icons.question_answer_outlined),
-              SizedBox(width: 16),
-              Text(
-                item.questionTitle,
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyMedium,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   String _getAverageReward(List<QuestionNewRecord>? data) {
     List<QuestionNewRecord> items = data ?? [];
@@ -70,13 +24,18 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
       }
     });
     var average = total / length;
-    return "\$${average.isNaN ? 0.0 : average}";
+    return "\$${average.isNaN ? 0.0 : average.toStringAsFixed(2)}";
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<QuestionNewRecord>>(
-      stream: queryQuestionNewRecord(),
+      stream: queryQuestionNewRecord(
+        queryBuilder: (p0) => p0.where(
+          'finishTimeAt',
+          isGreaterThan: DateTime.now(),
+        ),
+      ),
       builder: (context, snapshot) => BaseScaffoldListWidget(
         title: 'Select a questions: ',
         child: Builder(
@@ -87,7 +46,9 @@ class _ListQuestionsWidgetState extends State<ListQuestionsWidget> {
             return ListView.separated(
               itemCount: items.length,
               separatorBuilder: (context, index) => SizedBox(height: 8),
-              itemBuilder: (context, index) => _itemWidget(items[index]),
+              itemBuilder: (context, index) => QuestionItemWidget(
+                item: items[index],
+              ),
             );
           },
         ),

@@ -1,5 +1,6 @@
 import 'package:crowds/backend/backend.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
+import 'package:crowds/services/profile_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/base_scaffold.dart';
 import 'package:crowds/widgets/button_widget.dart';
@@ -40,16 +41,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     }
 
     try {
-      var user = FirebaseAuth.instance.currentUser;
-      FirebaseFirestore.instance
-          .collection('userInformation')
-          .doc(user?.uid)
-          .set({
-        "fullName": _fullNameController.text,
-        "stateInUS": _stateController.text,
-        "venmoUserName": _venmoController.text,
-        "answerQuestion": false,
-      });
+      ProfileService().createUser(
+        fullName: _fullNameController.text,
+        stateInUS: _stateController.text,
+        venmoUserName: _venmoController.text,
+      );
 
       context.pushReplacementNamed('ProfileCreatedPage');
     } catch (e) {

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
+import 'package:crowds/services/profile_service.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
@@ -17,11 +18,13 @@ export 'answering_question_model.dart';
 class AnsweringQuestionWidget extends StatefulWidget {
   const AnsweringQuestionWidget({
     Key? key,
+    required this.id,
     required this.titleReceived,
     required this.questionReceived,
     required this.questionPrice,
   }) : super(key: key);
 
+  final String? id;
   final String? titleReceived;
   final String? questionReceived;
   final double? questionPrice;
@@ -67,7 +70,7 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
     return false;
   }
 
-  Future<void> _submitAnswer(BuildContext context) async{
+  Future<void> _submitAnswer(BuildContext context) async {
     String? errorMessage;
 
     if (_model.textController.text.isEmpty) {
@@ -86,25 +89,22 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
     await AnswerCompletedRecord.collection
         .doc()
         .set(createAnswerCompletedRecordData(
-      answerText: valueOrDefault<String>(
-        _model.textController.text,
-        'NaN',
-      ),
-      questionTitle: valueOrDefault<String>(
-        widget.titleReceived,
-        'NaN',
-      ),
-      questionText: valueOrDefault<String>(
-        widget.questionReceived,
-        'NaN',
-      ),
-    ));
-
-    var user = FirebaseAuth.instance.currentUser;
-    var doc = FirebaseFirestore.instance
-        .collection('userInformation')
-        .doc(user?.uid);
-    await doc.update({"answerQuestion": true});
+          answerBy: FirebaseAuth.instance.currentUser?.uid,
+          createdAt: Timestamp.now(),
+          modifiedAt: Timestamp.now(),
+          answerText: valueOrDefault<String>(
+            _model.textController.text,
+            'NaN',
+          ),
+          questionTitle: valueOrDefault<String>(
+            widget.titleReceived,
+            'NaN',
+          ),
+          questionText: valueOrDefault<String>(
+            widget.questionReceived,
+            'NaN',
+          ),
+        ));
     context.pushReplacementNamed('AnsweringQuestionSuccessfully');
   }
 
@@ -175,7 +175,8 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                       child: AutoSizeText(
                                         "Answering...",
                                         maxLines: 1,
-                                        style: FlutterFlowTheme.of(context).displaySmall,
+                                        style: FlutterFlowTheme.of(context)
+                                            .displaySmall,
                                       ),
                                     ),
                                   ],
@@ -188,7 +189,8 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                       widget.titleReceived,
                                       'Question Title',
                                     ),
-                                    style: FlutterFlowTheme.of(context).displaySmall,
+                                    style: FlutterFlowTheme.of(context)
+                                        .displaySmall,
                                   ),
                                 ),
                                 SizedBox(height: 8),
@@ -196,7 +198,8 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     widget.questionReceived!,
-                                    style: FlutterFlowTheme.of(context).bodyMedium,
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                                 SizedBox(height: 16),
@@ -206,23 +209,27 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                   hintText: 'Type Answer Here',
                                   minLines: 10,
                                   maxLines: 10,
-                                  validator:
-                                      _model.textControllerValidator.asValidator(context),
+                                  validator: _model.textControllerValidator
+                                      .asValidator(context),
                                 ),
                                 SizedBox(height: 16),
                                 Text(
                                   'Rewards Estimates',
-                                  style: FlutterFlowTheme.of(context).displaySmall,
+                                  style:
+                                      FlutterFlowTheme.of(context).displaySmall,
                                 ),
                                 SizedBox(height: 8),
                                 Text(
                                   'The price to ask this question is:',
-                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                                 SizedBox(height: 16),
                                 Text(
                                   "\$${widget.questionPrice ?? 0.0}",
-                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
                                         fontFamily: 'Roboto',
                                         color: Color(0xE339D261),
                                         fontSize: 36.0,
@@ -231,7 +238,8 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                 SizedBox(height: 8),
                                 Text(
                                   'to',
-                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                                 SizedBox(height: 8),
                                 Text(
@@ -241,7 +249,9 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                     decimalType: DecimalType.automatic,
                                     currency: '\$',
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
                                         fontFamily: 'Roboto',
                                         color: Color(0xE339D261),
                                         fontSize: 36.0,
@@ -249,7 +259,8 @@ class _AnsweringQuestionWidgetState extends State<AnsweringQuestionWidget> {
                                 ),
                                 Text(
                                   'for your submitted answer.',
-                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                                 SizedBox(height: 36),
                               ],

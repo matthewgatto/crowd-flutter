@@ -6,6 +6,7 @@ import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -92,11 +93,20 @@ class _CreateQuestionIndividuallyWidgetState
       ParamType.DocumentReference,
     );
 
+    var finishAt = DateTime.now();
+    finishAt = finishAt.add(
+      _model.dropDownValue?.duration ?? QuestionLengthType.fiveDay.duration,
+    );
+
     await QuestionNewRecord.collection.doc().set(
           createQuestionNewRecordData(
             questionTitle: _model.textController1.text,
             questionText: _model.textController2.text,
             questionType: typeReference,
+            createBy: FirebaseAuth.instance.currentUser?.uid,
+            createdAt: Timestamp.now(),
+            modifiedAt: Timestamp.now(),
+            finishTimeAt: Timestamp.fromDate(finishAt),
             questionDuration:
                 _model.dropDownValue?.title ?? QuestionLengthType.fiveDay.title,
             price:
@@ -257,8 +267,8 @@ class _CreateQuestionIndividuallyWidgetState
                                     QuestionLengthType.fiveDay,
                                   ]
                                       .map(
-                                        (e) =>
-                                            DropdownMenuItem<QuestionLengthType>(
+                                        (e) => DropdownMenuItem<
+                                            QuestionLengthType>(
                                           value: e,
                                           child: Text(e.title),
                                         ),
@@ -314,7 +324,8 @@ class _CreateQuestionIndividuallyWidgetState
                                   height: 60,
                                   child: ButtonWidget(
                                     title: 'Submit Question',
-                                    onPressed: () async => _createQuestion(item),
+                                    onPressed: () async =>
+                                        _createQuestion(item),
                                   ),
                                 ),
                                 SizedBox(height: 20),

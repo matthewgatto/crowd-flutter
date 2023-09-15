@@ -25,4 +25,14 @@ extension QuestionLengthTypeTitle on QuestionLengthType {
         return 3.99;
     }
   }
+  Duration get duration {
+    switch (this){
+      case QuestionLengthType.fiveMinute:
+        return Duration(minutes: 5);
+      case QuestionLengthType.fiftyMinute:
+        return Duration(minutes: 50);
+      case QuestionLengthType.fiveDay:
+        return Duration(days: 5);
+    }
+  }
 }

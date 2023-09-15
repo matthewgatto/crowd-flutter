@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
+import 'package:crowds/services/profile_service.dart';
 import 'package:crowds/widgets/base_scaffold.dart';
 import 'package:crowds/widgets/button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
@@ -61,16 +62,11 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     try {
-      var user = FirebaseAuth.instance.currentUser;
-      var doc = FirebaseFirestore.instance
-          .collection('userInformation')
-          .doc(user?.uid);
-      
-      doc.update({
-        "fullName": _fullNameController.text,
-        "stateInUS": _stateController.text,
-        "venmoUserName": _venmoController.text,
-      });
+      ProfileService().updateUser(
+        fullName: _fullNameController.text,
+        stateInUS: _stateController.text,
+        venmoUserName: _venmoController.text,
+      );
       context.pop();
     } catch (e) {
       print(e);

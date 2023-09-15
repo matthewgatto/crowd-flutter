@@ -41,6 +41,10 @@ class QuestionNewRecord extends FirestoreRecord {
   DateTime? get modifiedAt => _modifiedAt;
   bool hasModifiedAt() => _modifiedAt != null;
 
+  // "modified_at" field.
+  DateTime? _finishTimeAt;
+  DateTime? get finishTimeAt => _finishTimeAt;
+
   // "on_sale" field.
   bool? _onSale;
   bool get onSale => _onSale ?? false;
@@ -61,6 +65,10 @@ class QuestionNewRecord extends FirestoreRecord {
   String get questionTitle => _questionTitle ?? '';
   bool hasQuestionTitle() => _questionTitle != null;
 
+  // "createBy" field.
+  String? _createBy;
+  String get createBy => _createBy ?? '';
+
   // "id" field.
   int? _id;
   int get id => _id ?? 0;
@@ -77,10 +85,12 @@ class QuestionNewRecord extends FirestoreRecord {
     _price = castToType<double>(snapshotData['price']);
     _createdAt = snapshotData['created_at'] as DateTime?;
     _modifiedAt = snapshotData['modified_at'] as DateTime?;
+    _finishTimeAt = snapshotData['finishTimeAt'] as DateTime?;
     _onSale = snapshotData['on_sale'] as bool?;
     _salePrice = castToType<double>(snapshotData['sale_price']);
     _questionText = snapshotData['questionText'] as String?;
     _questionTitle = snapshotData['questionTitle'] as String?;
+    _createBy = snapshotData['createBy'] as String?;
     _id = castToType<int>(snapshotData['id']);
     _questionDuration = castToType<String>(snapshotData['questionDuration']);
   }
@@ -123,13 +133,15 @@ Map<String, dynamic> createQuestionNewRecordData({
   String? description,
   String? specifications,
   double? price,
-  DateTime? createdAt,
-  DateTime? modifiedAt,
+  Timestamp? createdAt,
+  Timestamp? modifiedAt,
+  Timestamp? finishTimeAt,
   bool? onSale,
   double? salePrice,
   String? questionText,
   String? questionTitle,
   String? questionType,
+  String? createBy,
   int? id,
   String? questionDuration,
 }) {
@@ -140,10 +152,12 @@ Map<String, dynamic> createQuestionNewRecordData({
       'price': price,
       'created_at': createdAt,
       'modified_at': modifiedAt,
+      'finishTimeAt': finishTimeAt,
       'on_sale': onSale,
       'sale_price': salePrice,
       'questionText': questionText,
       'questionTitle': questionTitle,
+      'createBy': createBy,
       'questionType': questionType,
       'id': id,
       'questionDuration': questionDuration,

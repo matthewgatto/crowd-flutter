@@ -7,11 +7,13 @@ class BaseScaffoldListWidget extends StatelessWidget {
   final Widget child;
   final String title;
   final Widget? bottomWidget;
+  final Widget? titleIcon;
 
   const BaseScaffoldListWidget({
     required this.child,
     required this.title,
     this.bottomWidget,
+    this.titleIcon,
     super.key,
   });
 
@@ -58,6 +60,7 @@ class BaseScaffoldListWidget extends StatelessWidget {
                             style: FlutterFlowTheme.of(context).displaySmall,
                           ),
                         ),
+                        titleIcon ?? SizedBox(),
                       ],
                     ),
                   ),

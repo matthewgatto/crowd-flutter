@@ -81,6 +81,11 @@ class AnswerCompletedRecord extends FirestoreRecord {
   String get answerText => _answerText ?? '';
   bool hasAnswerText() => _answerText != null;
 
+  // "answerBy" field.
+  String? _answerBy;
+  String get answerBy => _answerBy ?? '';
+  bool hasAnswerBy() => _answerBy != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _description = snapshotData['description'] as String?;
@@ -95,6 +100,7 @@ class AnswerCompletedRecord extends FirestoreRecord {
     _questionText = snapshotData['questionText'] as String?;
     _id = snapshotData['id'] as String?;
     _answerText = snapshotData['answerText'] as String?;
+    _answerBy = snapshotData['answerBy'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -136,8 +142,8 @@ Map<String, dynamic> createAnswerCompletedRecordData({
   String? description,
   String? specifications,
   double? price,
-  DateTime? createdAt,
-  DateTime? modifiedAt,
+  Timestamp? createdAt,
+  Timestamp? modifiedAt,
   bool? onSale,
   double? salePrice,
   int? quantity,
@@ -145,6 +151,7 @@ Map<String, dynamic> createAnswerCompletedRecordData({
   String? questionText,
   String? id,
   String? answerText,
+  String? answerBy,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -161,6 +168,7 @@ Map<String, dynamic> createAnswerCompletedRecordData({
       'questionText': questionText,
       'id': id,
       'answerText': answerText,
+      'answerBy': answerBy,
     }.withoutNulls,
   );
 
