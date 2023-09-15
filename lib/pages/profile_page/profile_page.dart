@@ -1,9 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/dialog_service.dart';
 import 'package:crowds/services/profile_service.dart';
+import 'package:crowds/services/profile_view_model.dart';
 import 'package:crowds/widgets/base_scaffold.dart';
 import 'package:crowds/widgets/button_widget.dart';
+import 'package:crowds/widgets/drop_down_view_model.dart';
+import 'package:crowds/widgets/dropdown_button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +21,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  ProfileViewModel? _profileViewModel;
   final _fullNameController = TextEditingController();
-  final _stateController = TextEditingController();
   final _venmoController = TextEditingController();
+  final states = ProfileService.states
+      .map((e) => DropDownViewModel(value: e, title: e))
+      .toList();
 
   Future<void> _signOut(BuildContext context) async {
     DialogService.show(
@@ -29,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       title: "Sign out",
       description: "Sign out of the application?",
       onYes: () {
-        Future.delayed(Duration(milliseconds: 300),() async {
+        Future.delayed(Duration(milliseconds: 300), () async {
           await FirebaseAuth.instance.signOut();
           context.pushReplacementNamed("StartPage");
         });
@@ -46,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
     String? errorMessage;
     if (_fullNameController.text.isEmpty) {
       errorMessage = "Please enter your full name.";
-    } else if (_stateController.text.isEmpty) {
+    } else if (_profileViewModel?.stateInUS == null) {
       errorMessage = "Please enter state.";
     } else if (_venmoController.text.isEmpty) {
       errorMessage = "Please enter your venmo user name.";
@@ -63,8 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     try {
       ProfileService().updateUser(
+        _profileViewModel,
         fullName: _fullNameController.text,
-        stateInUS: _stateController.text,
+        stateInUS: _profileViewModel?.stateInUS ?? '',
         venmoUserName: _venmoController.text,
       );
       context.pop();
@@ -74,7 +80,33 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  Future<void> _getUserData() async {
+    _profileViewModel = await ProfileService().getUser();
+    _fullNameController.text = _profileViewModel?.fullName ?? '';
+    _venmoController.text = _profileViewModel?.venmoUserName ?? '';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    DropDownViewModel? getSelectedDropDownItem() {
+      try {
+        if (_profileViewModel?.stateInUS != null) {
+          return states
+              .where((element) => element.value == _profileViewModel?.stateInUS)
+              .first;
+        }
+      } catch (e) {}
+      return null;
+    }
+
     return BaseScaffold(
       title: "Profile ",
       icon: Icons.account_circle,
@@ -87,12 +119,19 @@ class _ProfilePageState extends State<ProfilePage> {
             controller: _fullNameController,
           ),
           SizedBox(height: 24),
-          TextFormFieldWidget(
-            labelText: "State in US",
-            hintText: "State in US",
-            controller: _stateController,
+          DropDownWidget(
+            title: "State in US",
+            value: getSelectedDropDownItem(),
+            items: states,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _profileViewModel?.stateInUS = value.title;
+                });
+              }
+            },
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 24),
           TextFormFieldWidget(
             labelText: "Venmo user name",
             hintText: "Venmo user name",

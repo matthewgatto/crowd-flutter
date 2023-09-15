@@ -1,11 +1,12 @@
-import 'package:crowds/backend/backend.dart';
 import 'package:crowds/enum/snack_bar_type.dart';
 import 'package:crowds/services/profile_service.dart';
+import 'package:crowds/services/profile_view_model.dart';
 import 'package:crowds/services/snack_bar_service.dart';
 import 'package:crowds/widgets/base_scaffold.dart';
 import 'package:crowds/widgets/button_widget.dart';
+import 'package:crowds/widgets/drop_down_view_model.dart';
+import 'package:crowds/widgets/dropdown_button_widget.dart';
 import 'package:crowds/widgets/text_form_field_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,15 +18,18 @@ class CreateProfilePage extends StatefulWidget {
 }
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
+  ProfileViewModel _profileViewModel = ProfileViewModel();
   final _fullNameController = TextEditingController();
-  final _stateController = TextEditingController();
   final _venmoController = TextEditingController();
+  final states = ProfileService.states
+      .map((e) => DropDownViewModel(value: e, title: e))
+      .toList();
 
   Future<void> _create(BuildContext context) async {
     String? errorMessage;
     if (_fullNameController.text.isEmpty) {
       errorMessage = "Please enter your full name.";
-    } else if (_stateController.text.isEmpty) {
+    } else if (_profileViewModel.stateInUS == null) {
       errorMessage = "Please enter state.";
     } else if (_venmoController.text.isEmpty) {
       errorMessage = "Please enter your venmo user name.";
@@ -43,7 +47,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     try {
       ProfileService().createUser(
         fullName: _fullNameController.text,
-        stateInUS: _stateController.text,
+        stateInUS: _profileViewModel.stateInUS ?? '',
         venmoUserName: _venmoController.text,
       );
 
@@ -55,6 +59,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    DropDownViewModel? getSelectedDropDownItem() {
+      try {
+        if (_profileViewModel.stateInUS != null) {
+          return states
+              .where((element) => element.value == _profileViewModel.stateInUS)
+              .first;
+        }
+      } catch (e) {}
+      return null;
+    }
+
     return BaseScaffold(
       title: "Create your profile ",
       icon: Icons.account_circle,
@@ -67,10 +82,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             controller: _fullNameController,
           ),
           SizedBox(height: 24),
-          TextFormFieldWidget(
-            labelText: "State in US",
-            hintText: "State in US",
-            controller: _stateController,
+          DropDownWidget(
+            title: "State in US",
+            value: getSelectedDropDownItem(),
+            items: states,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _profileViewModel.stateInUS = value.title;
+                });
+              }
+            },
           ),
           SizedBox(height: 16),
           TextFormFieldWidget(
